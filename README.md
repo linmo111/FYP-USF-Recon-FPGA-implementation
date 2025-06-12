@@ -1,8 +1,8 @@
 This is my Final year project repository. On the implementation of Unlimited Sensing Framework reconstruction algorithm on a FPGA.
 
-#User instruction:
+# User instruction:
 
-1.Connect the hardware components as per the schematic in the figure. You will need:
+1. Connect the hardware components as per the schematic in the figure. You will need:
 
 An Altera DE-10 Nano FPGA
 
@@ -12,16 +12,16 @@ A DAC
 
 A modulo ADC
 
-2.Open Quartus and open the project. (Version 18.1 was used, but newer versions should work fine.)
+2. Open Quartus and open the project. (Version 18.1 was used, but newer versions should work fine.)
 
-3.Connect the FPGA to your laptop. If the board is not detected, install the relevant drivers.
+3. Connect the FPGA to your laptop. If the board is not detected, install the relevant drivers.
 Open Programmer, click Auto-detect, delete the second file, and add the time-limited .sopc file. Upload it to the FPGA.
 
-4.Open Eclipse, select the software folder as your workspace.
+4. Open Eclipse, select the software folder as your workspace.
 Choose the streaming reconstruct folder, generate BSP, and build the project.
 Run the program. If no error messages appear, it should be running successfully.
 
-5.Assuming the input is connected, use the Picoscope to view the output waveform.
+5. Assuming the input is connected, use the Picoscope to view the output waveform.
 The default output without input should be a flat line at 2V.
 You should see the reconstructed waveform from the DAC output.
 
