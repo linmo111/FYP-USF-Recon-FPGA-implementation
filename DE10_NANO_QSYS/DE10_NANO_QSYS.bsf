@@ -1,0 +1,170 @@
+/*
+WARNING: Do NOT edit the input and output ports in this file in a text
+editor if you plan to continue editing the block that represents it in
+the Block Editor! File corruption is VERY likely to occur.
+*/
+/*
+Copyright (C) 2018  Intel Corporation. All rights reserved.
+Your use of Intel Corporation's design tools, logic functions 
+and other software and tools, and its AMPP partner logic 
+functions, and any output files from any of the foregoing 
+(including device programming or simulation files), and any 
+associated documentation or information are expressly subject 
+to the terms and conditions of the Intel Program License 
+Subscription Agreement, the Intel Quartus Prime License Agreement,
+the Intel FPGA IP License Agreement, or other applicable license
+agreement, including, without limitation, that your use is for
+the sole purpose of programming logic devices manufactured by
+Intel and sold by Intel or its authorized distributors.  Please
+refer to the applicable agreement for further details.
+*/
+(header "symbol" (version "1.1"))
+(symbol
+	(rect 0 0 464 376)
+	(text "DE10_NANO_QSYS" (rect 172 -1 261 11)(font "Arial" (font_size 10)))
+	(text "inst" (rect 8 360 20 372)(font "Arial" ))
+	(port
+		(pt 0 120)
+		(input)
+		(text "adc_ltc2308_conduit_end_sdo" (rect 0 0 120 12)(font "Arial" (font_size 8)))
+		(text "adc_ltc2308_conduit_end_sdo" (rect 4 109 166 120)(font "Arial" (font_size 8)))
+		(line (pt 0 120)(pt 192 120)(line_width 1))
+	)
+	(port
+		(pt 0 136)
+		(input)
+		(text "adc_ltc2308_conduit_end_dec" (rect 0 0 120 12)(font "Arial" (font_size 8)))
+		(text "adc_ltc2308_conduit_end_dec" (rect 4 125 166 136)(font "Arial" (font_size 8)))
+		(line (pt 0 136)(pt 192 136)(line_width 1))
+	)
+	(port
+		(pt 0 176)
+		(input)
+		(text "clk_clk" (rect 0 0 27 12)(font "Arial" (font_size 8)))
+		(text "clk_clk" (rect 4 165 46 176)(font "Arial" (font_size 8)))
+		(line (pt 0 176)(pt 192 176)(line_width 1))
+	)
+	(port
+		(pt 0 216)
+		(input)
+		(text "i2c_dac_serial_sda_in" (rect 0 0 88 12)(font "Arial" (font_size 8)))
+		(text "i2c_dac_serial_sda_in" (rect 4 205 130 216)(font "Arial" (font_size 8)))
+		(line (pt 0 216)(pt 192 216)(line_width 1))
+	)
+	(port
+		(pt 0 232)
+		(input)
+		(text "i2c_dac_serial_scl_in" (rect 0 0 84 12)(font "Arial" (font_size 8)))
+		(text "i2c_dac_serial_scl_in" (rect 4 221 130 232)(font "Arial" (font_size 8)))
+		(line (pt 0 232)(pt 192 232)(line_width 1))
+	)
+	(port
+		(pt 0 304)
+		(input)
+		(text "reset_reset_n" (rect 0 0 56 12)(font "Arial" (font_size 8)))
+		(text "reset_reset_n" (rect 4 293 82 304)(font "Arial" (font_size 8)))
+		(line (pt 0 304)(pt 192 304)(line_width 1))
+	)
+	(port
+		(pt 0 344)
+		(input)
+		(text "sw_external_connection_export[9..0]" (rect 0 0 145 12)(font "Arial" (font_size 8)))
+		(text "sw_external_connection_export[9..0]" (rect 4 333 214 344)(font "Arial" (font_size 8)))
+		(line (pt 0 344)(pt 192 344)(line_width 3))
+	)
+	(port
+		(pt 0 72)
+		(output)
+		(text "adc_ltc2308_conduit_end_convst" (rect 0 0 133 12)(font "Arial" (font_size 8)))
+		(text "adc_ltc2308_conduit_end_convst" (rect 4 61 184 72)(font "Arial" (font_size 8)))
+		(line (pt 0 72)(pt 192 72)(line_width 1))
+	)
+	(port
+		(pt 0 88)
+		(output)
+		(text "adc_ltc2308_conduit_end_sck" (rect 0 0 120 12)(font "Arial" (font_size 8)))
+		(text "adc_ltc2308_conduit_end_sck" (rect 4 77 166 88)(font "Arial" (font_size 8)))
+		(line (pt 0 88)(pt 192 88)(line_width 1))
+	)
+	(port
+		(pt 0 104)
+		(output)
+		(text "adc_ltc2308_conduit_end_sdi" (rect 0 0 116 12)(font "Arial" (font_size 8)))
+		(text "adc_ltc2308_conduit_end_sdi" (rect 4 93 166 104)(font "Arial" (font_size 8)))
+		(line (pt 0 104)(pt 192 104)(line_width 1))
+	)
+	(port
+		(pt 0 248)
+		(output)
+		(text "i2c_dac_serial_sda_oe" (rect 0 0 92 12)(font "Arial" (font_size 8)))
+		(text "i2c_dac_serial_sda_oe" (rect 4 237 130 248)(font "Arial" (font_size 8)))
+		(line (pt 0 248)(pt 192 248)(line_width 1))
+	)
+	(port
+		(pt 0 264)
+		(output)
+		(text "i2c_dac_serial_scl_oe" (rect 0 0 88 12)(font "Arial" (font_size 8)))
+		(text "i2c_dac_serial_scl_oe" (rect 4 253 130 264)(font "Arial" (font_size 8)))
+		(line (pt 0 264)(pt 192 264)(line_width 1))
+	)
+	(port
+		(pt 464 72)
+		(output)
+		(text "pll_sys_locked_export" (rect 0 0 89 12)(font "Arial" (font_size 8)))
+		(text "pll_sys_locked_export" (rect 351 61 477 72)(font "Arial" (font_size 8)))
+		(line (pt 464 72)(pt 272 72)(line_width 1))
+	)
+	(port
+		(pt 464 112)
+		(output)
+		(text "pll_sys_outclk2_clk" (rect 0 0 77 12)(font "Arial" (font_size 8)))
+		(text "pll_sys_outclk2_clk" (rect 366 101 480 112)(font "Arial" (font_size 8)))
+		(line (pt 464 112)(pt 272 112)(line_width 1))
+	)
+	(drawing
+		(text "adc_ltc2308_conduit_end" (rect 46 43 230 99)(font "Arial" (color 128 0 0)(font_size 9)))
+		(text "convst" (rect 197 67 430 144)(font "Arial" (color 0 0 0)))
+		(text "sck" (rect 197 83 412 176)(font "Arial" (color 0 0 0)))
+		(text "sdi" (rect 197 99 412 208)(font "Arial" (color 0 0 0)))
+		(text "sdo" (rect 197 115 412 240)(font "Arial" (color 0 0 0)))
+		(text "dec" (rect 197 131 412 272)(font "Arial" (color 0 0 0)))
+		(text "clk" (rect 177 147 372 307)(font "Arial" (color 128 0 0)(font_size 9)))
+		(text "clk" (rect 197 171 412 352)(font "Arial" (color 0 0 0)))
+		(text "i2c_dac_serial" (rect 109 187 302 387)(font "Arial" (color 128 0 0)(font_size 9)))
+		(text "sda_in" (rect 197 211 430 432)(font "Arial" (color 0 0 0)))
+		(text "scl_in" (rect 197 227 430 464)(font "Arial" (color 0 0 0)))
+		(text "sda_oe" (rect 197 243 430 496)(font "Arial" (color 0 0 0)))
+		(text "scl_oe" (rect 197 259 430 528)(font "Arial" (color 0 0 0)))
+		(text "pll_sys_locked" (rect 273 43 630 99)(font "Arial" (color 128 0 0)(font_size 9)))
+		(text "export" (rect 242 67 520 144)(font "Arial" (color 0 0 0)))
+		(text "pll_sys_outclk2" (rect 273 83 636 179)(font "Arial" (color 128 0 0)(font_size 9)))
+		(text "clk" (rect 257 107 532 224)(font "Arial" (color 0 0 0)))
+		(text "reset" (rect 163 275 356 563)(font "Arial" (color 128 0 0)(font_size 9)))
+		(text "reset_n" (rect 197 299 436 608)(font "Arial" (color 0 0 0)))
+		(text "sw_external_connection" (rect 53 315 238 643)(font "Arial" (color 128 0 0)(font_size 9)))
+		(text "export" (rect 197 339 430 688)(font "Arial" (color 0 0 0)))
+		(text " DE10_NANO_QSYS " (rect 371 360 838 730)(font "Arial" ))
+		(line (pt 192 32)(pt 272 32)(line_width 1))
+		(line (pt 272 32)(pt 272 360)(line_width 1))
+		(line (pt 192 360)(pt 272 360)(line_width 1))
+		(line (pt 192 32)(pt 192 360)(line_width 1))
+		(line (pt 193 52)(pt 193 140)(line_width 1))
+		(line (pt 194 52)(pt 194 140)(line_width 1))
+		(line (pt 193 156)(pt 193 180)(line_width 1))
+		(line (pt 194 156)(pt 194 180)(line_width 1))
+		(line (pt 193 196)(pt 193 268)(line_width 1))
+		(line (pt 194 196)(pt 194 268)(line_width 1))
+		(line (pt 271 52)(pt 271 76)(line_width 1))
+		(line (pt 270 52)(pt 270 76)(line_width 1))
+		(line (pt 271 92)(pt 271 116)(line_width 1))
+		(line (pt 270 92)(pt 270 116)(line_width 1))
+		(line (pt 193 284)(pt 193 308)(line_width 1))
+		(line (pt 194 284)(pt 194 308)(line_width 1))
+		(line (pt 193 324)(pt 193 348)(line_width 1))
+		(line (pt 194 324)(pt 194 348)(line_width 1))
+		(line (pt 0 0)(pt 464 0)(line_width 1))
+		(line (pt 464 0)(pt 464 376)(line_width 1))
+		(line (pt 0 376)(pt 464 376)(line_width 1))
+		(line (pt 0 0)(pt 0 376)(line_width 1))
+	)
+)

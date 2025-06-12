@@ -1,0 +1,86 @@
+module tb_top();
+    // Testbench signals
+    logic clk, reset, valid_in,clk_en;
+    logic signed [31:0] adc_input;
+    logic valid_out;
+    logic signed [31:0] reconstructed_sample;
+	 
+	 logic signed [31:0] test_in;
+	 
+	 assign test_in=32'b00111111111000000000000000000000;
+
+    // Instantiate the top-level module
+    reconstruction_top #(
+        .WIDTH(16),
+        .LAMBDA(1),
+		  .FRACTIONAL_BITS(10)
+    ) uut (
+        .clk(clk),
+        .reset(reset),
+		  .clk_en(clk_en),
+        .adc_in(adc_input),
+        .valid_out(valid_out),
+        .adc_out(reconstructed_sample)
+    );
+
+    // Clock generation
+    initial begin
+        clk = 0;
+        forever #5 clk = ~clk;  // 10 ns clock period
+    end
+
+    // Stimulus
+    initial begin
+        reset = 1;
+        clk_en = 0;
+        adc_input = 0;
+        #20 reset = 0;
+
+        // Apply test vectors (ADC inputs)
+
+			clk_en=1;
+		 adc_input = 0; // Should unwrap
+        #90;
+		  clk_en=0;
+			#50;
+			
+			
+			clk_en=1;
+		 adc_input = 0; // Should unwrap
+        #90 ;
+		  	clk_en=0;
+			#50;
+		  
+		  
+		  
+		  
+		  clk_en=1;
+		  adc_input = test_in; // First input
+        #90;
+		  clk_en=0;
+			#50;
+			clk_en=1;
+		 adc_input = 0; // Should unwrap
+        #90;
+		 
+		  clk_en=0;
+			#50;
+			clk_en=1;
+			adc_input = test_in;  // Should unwrap
+        #90
+		   clk_en=0;
+			#50;
+			clk_en=1;
+		  
+		  adc_input = test_in;    // Neutral
+        #90 
+		   clk_en=0;
+			#50;
+			clk_en=1;
+		  
+		  adc_input = 0; // Large negative
+        #90 clk_en=0;  // Stop
+        
+        #100 $stop;
+    end
+endmodule

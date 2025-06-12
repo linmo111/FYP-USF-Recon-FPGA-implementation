@@ -1,0 +1,41 @@
+module reconstruction_top #(
+    parameter WIDTH = 16  // Data width
+) (
+    input  logic                  clk,           // Clock signal
+    input  logic                  reset,         // Reset signal
+    input  logic                  valid_in,      // Valid input signal
+    input  logic signed [WIDTH-1:0] folded_in, // y[k] (Modulo ADC output) 
+    output logic                  valid_out,     // Output valid signal
+    output logic signed [WIDTH-1:0] reconstructed_sample // g[k] (Final recovered sample)
+);
+	 logic signed [WIDTH-1:0] residual_in,      // ε_y[k] (Recovered residual)
+
+
+
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+    always_ff @(posedge clk or posedge reset) begin
+        if (reset) begin
+            reconstructed_sample <= 0;
+            valid_out <= 0;
+        end else if (valid_in) begin
+            // Step 1: Add modulo samples and recovered residuals
+            reconstructed_sample <= modulo_sample_in + residual_in;
+
+            // Step 2: Output valid signal
+            valid_out <= 1;
+        end else begin
+            valid_out <= 0;
+        end
+    end
+
+endmodule

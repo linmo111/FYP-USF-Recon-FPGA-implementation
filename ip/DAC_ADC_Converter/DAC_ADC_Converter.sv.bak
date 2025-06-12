@@ -1,0 +1,14 @@
+module DAC_ADC_Converter (
+    input  logic [11:0] ADC_Val, // 12-bit ADC value (0 to 4096)
+    output logic [7:0] DAC_Val   // 8-bit DAC value (0 to 255)
+);
+
+    // Precomputed scaling factor
+    localparam int SCALE_FACTOR = (4096 * 256) / 5; // Precomputed to avoid floating-point math
+
+    // Conversion logic
+    always_comb begin
+        DAC_Val = (ADC_Val * 256) / SCALE_FACTOR; // Direct integer-based calculation
+    end
+
+endmodule

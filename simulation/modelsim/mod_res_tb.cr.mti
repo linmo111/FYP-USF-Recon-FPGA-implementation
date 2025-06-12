@@ -1,0 +1,229 @@
+D:/year4/fyp/ADC/anti_difference_rounding.sv {1 {vlog -work work -sv -stats=none D:/year4/fyp/ADC/anti_difference_rounding.sv
+Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
+-- Compiling module anti_difference_rounding
+
+Top level modules:
+	anti_difference_rounding
+
+} {} {}} D:/year4/fyp/ADC/tb_usf.sv {1 {vlog -work work -sv -stats=none D:/year4/fyp/ADC/tb_usf.sv
+Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
+-- Compiling module tb_top
+
+Top level modules:
+	tb_top
+
+} {} {}} D:/year4/fyp/ADC/ip/Higher_orders/HOD_n.sv {1 {vlog -work work -sv -stats=none D:/year4/fyp/ADC/ip/Higher_orders/HOD_n.sv
+Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
+-- Compiling module higher_order_difference_n
+
+Top level modules:
+	higher_order_difference_n
+
+} {} {}} D:/year4/fyp/ADC/reconstruction_top.sv {1 {vlog -work work -sv -stats=none D:/year4/fyp/ADC/reconstruction_top.sv
+Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
+-- Compiling module reconstruction_top
+
+Top level modules:
+	reconstruction_top
+
+} {} {}} D:/year4/fyp/ADC/floating_to_fixed.sv {1 {vlog -work work -sv -stats=none D:/year4/fyp/ADC/floating_to_fixed.sv
+Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
+-- Compiling module float_to_fixed
+
+Top level modules:
+	float_to_fixed
+
+} {} {}} D:/year4/fyp/ADC/ip/Higher_orders/top_piped_n2.sv {1 {vlog -work work -sv -stats=none D:/year4/fyp/ADC/ip/Higher_orders/top_piped_n2.sv
+Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
+-- Compiling module reconstruction_top_pipelined_n
+
+Top level modules:
+	reconstruction_top_pipelined_n
+
+} {} {}} D:/year4/fyp/ADC/fixed_to_float.sv {1 {vlog -work work -sv -stats=none D:/year4/fyp/ADC/fixed_to_float.sv
+Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
+-- Compiling module fixed_to_float
+
+Top level modules:
+	fixed_to_float
+
+} {} {}} D:/year4/fyp/ADC/ip/Higher_orders/ADR_n.sv {1 {vlog -work work -sv -stats=none D:/year4/fyp/ADC/ip/Higher_orders/ADR_n.sv
+Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
+-- Compiling module anti_difference_rounding_n
+
+Top level modules:
+	anti_difference_rounding_n
+
+} {} {}} D:/year4/fyp/ADC/modulo_residual.sv {1 {vlog -work work -sv -stats=none D:/year4/fyp/ADC/modulo_residual.sv
+Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
+-- Compiling module modulo_residual
+
+Top level modules:
+	modulo_residual
+
+} {} {}} D:/quartus18.1/quartus/eda/sim_lib/220model.v {1 {vlog -work work -stats=none D:/quartus18.1/quartus/eda/sim_lib/220model.v
+Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
+-- Compiling module LPM_MEMORY_INITIALIZATION
+-- Compiling module LPM_HINT_EVALUATION
+-- Compiling module LPM_DEVICE_FAMILIES
+-- Compiling module lpm_constant
+-- Compiling module lpm_inv
+-- Compiling module lpm_and
+-- Compiling module lpm_or
+-- Compiling module lpm_xor
+-- Compiling module lpm_bustri
+-- Compiling module lpm_mux
+-- Compiling module lpm_decode
+-- Compiling module lpm_clshift
+-- Compiling module lpm_add_sub
+-- Compiling module lpm_compare
+-- Compiling module lpm_mult
+-- Compiling module lpm_divide
+-- Compiling module lpm_abs
+-- Compiling module lpm_counter
+-- Compiling module lpm_latch
+-- Compiling module lpm_ff
+-- Compiling module lpm_shiftreg
+-- Compiling module lpm_ram_dq
+-- Compiling module lpm_ram_dp
+-- Compiling module lpm_ram_io
+-- Compiling module lpm_rom
+-- Compiling module lpm_fifo
+-- Compiling module lpm_fifo_dc_dffpipe
+-- Compiling module lpm_fifo_dc_fefifo
+-- Compiling module lpm_fifo_dc_async
+-- Compiling module lpm_fifo_dc
+-- Compiling module lpm_inpad
+-- Compiling module lpm_outpad
+-- Compiling module lpm_bipad
+
+Top level modules:
+	lpm_constant
+	lpm_inv
+	lpm_and
+	lpm_or
+	lpm_xor
+	lpm_bustri
+	lpm_mux
+	lpm_decode
+	lpm_clshift
+	lpm_add_sub
+	lpm_compare
+	lpm_mult
+	lpm_divide
+	lpm_abs
+	lpm_counter
+	lpm_latch
+	lpm_ff
+	lpm_shiftreg
+	lpm_ram_dq
+	lpm_ram_dp
+	lpm_ram_io
+	lpm_rom
+	lpm_fifo
+	lpm_fifo_dc
+	lpm_inpad
+	lpm_outpad
+	lpm_bipad
+
+} {} {}} D:/year4/fyp/ADC/mod_divide.v {1 {vlog -work work -stats=none D:/year4/fyp/ADC/mod_divide.v
+Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
+-- Compiling module mod_divide
+
+Top level modules:
+	mod_divide
+
+} {} {}} D:/year4/fyp/ADC/fixed_to_dac.sv {2 {vlog -work work -sv -stats=none D:/year4/fyp/ADC/fixed_to_dac.sv
+Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
+-- Compiling module fixed_to_dac
+** Warning: D:/year4/fyp/ADC/fixed_to_dac.sv(6): (vlog-2600) [RDGN] - Redundant digits in numeric literal.
+** Warning: D:/year4/fyp/ADC/fixed_to_dac.sv(7): (vlog-2600) [RDGN] - Redundant digits in numeric literal.
+
+Top level modules:
+	fixed_to_dac
+
+} {} {}} D:/year4/fyp/ADC/ip/adc_to_fixed.sv {1 {vlog -work work -sv -stats=none D:/year4/fyp/ADC/ip/adc_to_fixed.sv
+Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
+-- Compiling module adc_to_fixed
+
+Top level modules:
+	adc_to_fixed
+
+} {} {}} D:/year4/fyp/ADC/ip/tb_pipe.sv {1 {vlog -work work -sv -stats=none D:/year4/fyp/ADC/ip/tb_pipe.sv
+Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
+-- Compiling module aa_tb_top_pipe
+
+Top level modules:
+	aa_tb_top_pipe
+
+} {} {}} D:/year4/fyp/ADC/anti_diff_div.v {1 {vlog -work work -stats=none D:/year4/fyp/ADC/anti_diff_div.v
+Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
+-- Compiling module anti_diff_div
+
+Top level modules:
+	anti_diff_div
+
+} {} {}} D:/year4/fyp/ADC/ip/top_pipelined.sv {1 {vlog -work work -sv -stats=none D:/year4/fyp/ADC/ip/top_pipelined.sv
+Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
+-- Compiling module reconstruction_top_pipelined
+
+Top level modules:
+	reconstruction_top_pipelined
+
+} {} {}} D:/year4/fyp/ADC/higher_order_difference.sv {1 {vlog -work work -sv -stats=none D:/year4/fyp/ADC/higher_order_difference.sv
+Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
+-- Compiling module higher_order_difference
+
+Top level modules:
+	higher_order_difference
+
+} {} {}} D:/year4/fyp/ADC/adr_tb.sv {1 {vlog -work work -sv -stats=none D:/year4/fyp/ADC/adr_tb.sv
+Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
+-- Compiling module tb_anti_difference_rounding
+
+Top level modules:
+	tb_anti_difference_rounding
+
+} {} {}} D:/year4/fyp/ADC/avg_div.v {1 {vlog -work work -stats=none D:/year4/fyp/ADC/avg_div.v
+Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
+-- Compiling module avg_div
+
+Top level modules:
+	avg_div
+
+} {} {}} D:/year4/fyp/ADC/tb_modulo_residual.sv {1 {vlog -work work -sv -stats=none D:/year4/fyp/ADC/tb_modulo_residual.sv
+Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
+-- Compiling module tb_modulo_residual
+
+Top level modules:
+	tb_modulo_residual
+
+} {} {}} D:/year4/fyp/ADC/ip/Higher_orders/anti_difference_stage.sv {1 {vlog -work work -sv -stats=none D:/year4/fyp/ADC/ip/Higher_orders/anti_difference_stage.sv
+Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
+-- Compiling module anti_difference_stage
+
+Top level modules:
+	anti_difference_stage
+
+} {} {}} D:/year4/fyp/ADC/ip/Higher_orders/tb_piped_n.sv {1 {vlog -work work -sv -stats=none D:/year4/fyp/ADC/ip/Higher_orders/tb_piped_n.sv
+Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
+-- Compiling module aa_tb_top_pipe_n
+
+Top level modules:
+	aa_tb_top_pipe_n
+
+} {} {}} D:/year4/fyp/ADC/ip/modulo_residual_piped.sv {1 {vlog -work work -sv -stats=none D:/year4/fyp/ADC/ip/modulo_residual_piped.sv
+Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
+-- Compiling module modulo_residual_piped
+
+Top level modules:
+	modulo_residual_piped
+
+} {} {}} D:/year4/fyp/ADC/ip/moving_average.sv {1 {vlog -work work -sv -stats=none D:/year4/fyp/ADC/ip/moving_average.sv
+Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
+-- Compiling module moving_average
+
+Top level modules:
+	moving_average
+
+} {} {}}

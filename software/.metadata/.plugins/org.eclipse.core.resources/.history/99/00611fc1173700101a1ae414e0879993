@@ -1,0 +1,303 @@
+#include <stdio.h>
+#include <io.h>
+#include <unistd.h>
+#include <stdint.h>
+
+#include "system.h"
+#include <math.h>
+
+#include "altera_avalon_i2c.h"  // Include Avalon I2C API
+
+
+
+#define ALT_CI_RECONSTRUCTION_TOP_0(A) __builtin_custom_ini(ALT_CI_RECONSTRUCTION_TOP_0_N,(A))
+#define ALT_CI_RECONSTRUCTION_TOP_0_N 0x1
+
+#define ALT_CI_RECON_TOP_PIPELINE_0(A) __builtin_custom_ini(ALT_CI_RECON_TOP_PIPELINE_0_N,(A))
+#define ALT_CI_RECON_TOP_PIPELINE_0_N 0x0
+
+typedef struct {
+    float lam;
+    float prev_y;
+    float prev_eps;
+    int initialized;
+} UnlimitedSamplerReconstructor;
+
+/* Initialize the reconstructor */
+void initReconstructor(UnlimitedSamplerReconstructor *recon, float lam) {
+    recon->lam = lam;
+    recon->prev_y = 0.0;
+    recon->prev_eps = 0.0;
+    recon->initialized = 0;
+}
+
+/* Centered modulo function into [-¦Ë, ¦Ë) */
+float modulo(float x, float lam) {
+    float two_lam = 2.0 * lam;
+    float mod = fmod(x + lam, two_lam);
+    if (mod < 0) mod += two_lam;
+    return mod - lam;
+}
+
+/* Update function: process one sample */
+float update(UnlimitedSamplerReconstructor *recon, float yk) {
+    if (!recon->initialized) {
+        recon->prev_y = yk;
+        recon->initialized = 1;
+        return yk;  // First sample, return as is
+    }
+
+    // Step 1: Compute ¦¤y[k]
+    float dy = yk - recon->prev_y;
+
+    // Step 2: Apply modulo to ¦¤y[k]
+    float mod_dy = modulo(dy, recon->lam);
+
+    // Step 3: Compute ¦¤¦Å[k]
+    float delta_eps = mod_dy - dy;
+
+    // Step 4: Update ¦Å[k], round to nearest 2¦Ë
+    recon->prev_eps += delta_eps;
+    float eps_k = 2.0 * recon->lam * round(recon->prev_eps / (2.0 * recon->lam));
+
+    // Step 5: Recover g[k]
+    float gk = yk + eps_k;
+
+    // Update state
+    recon->prev_y = yk;
+
+    return gk;
+}
+
+
+#define MA_WINDOW_SIZE 100  // Size of the moving average window
+
+typedef struct {
+    float buffer[MA_WINDOW_SIZE];
+    int index;
+    int count;
+    float sum;
+} MovingAverage;
+
+/* Initialize the moving average filter */
+void initMovingAverage(MovingAverage *ma) {
+    ma->index = 0;
+    ma->count = 0;
+    ma->sum = 0.0;
+
+    for (int i = 0; i < MA_WINDOW_SIZE; i++) {
+        ma->buffer[i] = 0.0;
+    }
+}
+
+/* Update the moving average with a new sample */
+float updateMovingAverage(MovingAverage *ma, float new_sample) {
+    // Remove the oldest sample from the sum
+    ma->sum -= ma->buffer[ma->index];
+
+    // Add the new sample to the buffer and sum
+    ma->buffer[ma->index] = new_sample;
+    ma->sum += new_sample;
+
+    // Update the index (circular buffer)
+    ma->index = (ma->index + 1) % MA_WINDOW_SIZE;
+
+    // Update the count (if less than window size)
+    if (ma->count < MA_WINDOW_SIZE) {
+        ma->count++;
+    }
+
+    // Compute the moving average
+    return ma->sum / ma->count;
+}
+
+float convert_adc_to_signal(int adc_value, int ADC_MAX_VALUE, float V_REF, float OFFSET_VOLTAGE) {
+    // Calculate the input voltage
+    float input_voltage = (adc_value / (float)ADC_MAX_VALUE) * V_REF;
+
+    // Subtract the offset to get the original signal value
+    float signal_value = input_voltage - OFFSET_VOLTAGE;
+
+    return signal_value;
+}
+
+
+uint8_t float_to_dac(float signal_value, int DAC_MAX_VALUE, float V_REF, float OFFSET) {
+    float dac_voltage;
+    uint8_t dac_value;
+
+    // Apply offset
+    dac_voltage = signal_value + OFFSET;
+
+    // Clamp to DAC range (0V to 5V)
+    if (dac_voltage < 0.0f) {
+        dac_voltage = 0.0f;
+    } else if (dac_voltage > V_REF) {
+        dac_voltage = V_REF;
+    }
+
+    // Convert to DAC value
+    dac_value = (uint8_t)((dac_voltage / V_REF) * DAC_MAX_VALUE);
+
+    return dac_value;
+}
+
+
+
+
+
+
+
+
+
+
+int send_to_PCF(ALT_AVALON_I2C_DEV_t *i2c_dev, alt_u8 dac_value) {
+    alt_u8 txbuffer[2];  // Buffer to hold data to send
+    ALT_AVALON_I2C_STATUS_CODE status;
+
+    // Prepare the control byte and DAC data
+    txbuffer[0] = 0x40;     // Control byte: Enable DAC
+    txbuffer[1] = dac_value; // Data byte: Value to set DAC output
+
+    // Write the data to the DAC
+    status = alt_avalon_i2c_master_tx(i2c_dev, txbuffer, 2, ALT_AVALON_I2C_NO_INTERRUPTS);
+    if (status != ALT_AVALON_I2C_SUCCESS) {
+        printf("Error: I2C write to DAC failed with status code: %d\n", status);
+        return -1; // Return error
+    }
+   // printf("inhere");
+    return 0; // Success
+}
+
+
+
+
+
+int top(int adc_value,UnlimitedSamplerReconstructor *recon, MovingAverage *ma ){
+
+	float signal_in=convert_adc_to_signal(adc_value,4095,4.096,0);
+	float reconstructed_val=update(recon, signal_in);
+	float avg = updateMovingAverage(ma, reconstructed_val);
+	int dac_out=float_to_dac(reconstructed_val-avg,255,5,2);
+	return dac_out;
+}
+
+
+
+void main(void){
+	int ch = 0;
+	const int nReadNum = 10; // max 1024
+	int i, ADC_value, nIndex=0;
+	uint16_t DAC_val=0;
+	float signal_val, reconstructed_val=0;
+//	printf("ADC Demo\r\n");
+    ALT_AVALON_I2C_DEV_t *i2c_dev;  // Pointer to I2C instance structure
+   // int adc_value = 0;             // Example ADC value to send
+    int result;
+    float lam = 0.75;
+    UnlimitedSamplerReconstructor recon;
+    initReconstructor(&recon, lam);
+
+    MovingAverage ma;
+    initMovingAverage(&ma);
+
+    // Open the I2C device instance
+    i2c_dev = alt_avalon_i2c_open("/dev/i2c_dac");
+    if (NULL == i2c_dev) {
+        printf("Error: Cannot find /dev/i2c_dac\n");
+        return ;
+    }
+    ALT_AVALON_I2C_MASTER_CONFIG_t cfg;
+
+
+    // Set the target device address (PCF8591T address is typically 0x48)
+    alt_avalon_i2c_master_target_set(i2c_dev, 0x48);
+//    alt_avalon_i2c_master_config_set(i2c_dev, &cfg);
+//     alt_avalon_i2c_master_target_set(i2c_dev, 0x72);
+     if (i2c_dev) {
+    	 printf("DAC CONNECTED\n");
+         alt_avalon_i2c_master_config_speed_set(i2c_dev,&cfg, 400000); // Set 400 kHz
+         alt_avalon_i2c_master_config_set(i2c_dev, &cfg);
+     }
+
+     printf("running \n");
+
+    IOWR(ADC_LTC2308_BASE, 0x01, nReadNum);
+	int downsample_ratio=10;
+	int count=0;
+	while(1){
+
+		// start measure
+		IOWR(ADC_LTC2308_BASE, 0x00, (ch << 1) | 0x00);
+		IOWR(ADC_LTC2308_BASE, 0x00, (ch << 1) | 0x01);
+//		IOWR(ADC_LTC2308_BASE, 0x00, (ch << 1) | 0x00);
+//		usleep(1);
+
+		// wait measure done
+//		while ((IORD(ADC_LTC2308_BASE,0x00) & 0x01) == 0x00);
+
+		// read adc value
+
+		for(i=0;i<nReadNum;i+=1){
+			if (count<downsample_ratio){
+				count+=1;
+				IORD(ADC_LTC2308_BASE, 0x01);
+
+			}
+			else{
+				count=0;
+				ADC_value = IORD(ADC_LTC2308_BASE, 0x01);
+				DAC_val=ALT_CI_RECON_TOP_PIPELINE_0(ADC_value);
+				result = send_to_PCF(i2c_dev, DAC_val);
+				//	        result = send_to_PCF(i2c_dev, (8)Value);
+				////			result = send_to_LTC2607(i2c_dev,0, (alt_u16)Value);
+				if (result != 0) {
+					printf("Failed to send data to DAC.\n");
+					break;
+				}
+				else{
+		        	printf("sent DAC_VAL %d.\n", DAC_val);
+				}
+			}
+
+
+//			ADC_value = IORD(ADC_LTC2308_BASE, 0x01);
+//			write_adc_value(Value);
+//			DAC_val=ALT_CI_ADC_DAC_CONVERTER_0(Value);
+//			DAC_val= ALT_CI_RECONSTRUCTION_TOP_0(ADC_value);
+
+//     		DAC_val=ALT_CI_RECON_TOP_PIPELINE_0(ADC_value);
+//			DAC_val=top(ADC_value,&recon,&ma);
+
+//			DAC_val=ALT_CI_RECONSTRUCTION_TOP_0(ADC_value);
+//			reconstructed_val=update(&recon, signal_val);
+//			updateBiasCorrector(&bc, reconstructed_val);
+//			float correction = applyBiasCorrection(&bc);
+//			float avg = updateMovingAverage(&ma, reconstructed_val);
+//			DAC_val=float_to_dac(reconstructed_val,256,5,2);
+	//		DAC_val=float_to_dac(correction,256,5,0.5);
+
+
+//			DAC_val=float_to_dac(signal_val,256,5.0,0);
+//			DAC_val=DAC_ADC_Convert(Value,4.096,5);
+			//pcf8591_write_dac(128);
+//			printf("calculated adc_VAL %d.\n", ADC_value);
+//			printf("reconstructed signal_Val %f.\n", reconstructed_val);
+//			printf("calculated DAC_VAL %d.\n", DAC_val);
+
+//	        result = send_to_PCF(i2c_dev, DAC_val);
+////	        result = send_to_PCF(i2c_dev, (8)Value);
+//////			result = send_to_LTC2607(i2c_dev,0, (alt_u16)Value);
+//	        if (result != 0) {
+//	            printf("Failed to send data to DAC.\n");
+//	            break;
+//	        }
+//	        else{
+////	        	printf("sent DAC_VAL %d.\n", DAC_val);
+//	        }
+
+		}
+
+//		usleep(200);
+	}
+}

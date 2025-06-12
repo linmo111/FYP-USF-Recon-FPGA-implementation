@@ -1,0 +1,33 @@
+module DAC_ADC_Converter (
+    input  logic        clk,        // Clock input (required by Avalon, unused internally)
+    input  logic        reset,      // Reset input (required by Avalon, unused internally)
+    input  logic        write,      // Avalon write enable
+    input  logic [15:0] writedata,  // Avalon write data (ADC_Val input)
+    input  logic        read,       // Avalon read enable
+    output logic [15:0] readdata    // Avalon read data (DAC_Val output)
+);
+
+    // Internal signals
+    logic [11:0] ADC_Val_internal; // 12-bit ADC value
+    logic [7:0]  DAC_Val_internal; // 8-bit DAC value
+
+    // Write ADC_Val from Avalon bus
+    always_comb begin
+        if (write) begin
+            ADC_Val_internal = writedata[11:0]; // Take lower 12 bits from writedata
+        end
+    end
+
+    // Combinational conversion logic
+    always_comb begin
+        DAC_Val_internal = (ADC_Val_internal * 256) / ((4096 * 256) / 5); // Scaling
+    end
+
+    // Read DAC_Val to Avalon bus
+    always_comb begin
+        if (read) begin
+            readdata = {8'b0, DAC_Val_internal}; // Pad upper 8 bits with 0
+        end
+    end
+
+endmodule

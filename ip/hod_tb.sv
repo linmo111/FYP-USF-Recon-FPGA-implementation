@@ -1,0 +1,43 @@
+module testbench();
+    logic clk, reset, valid_in;
+    logic [15:0] y_in;
+    logic valid_out;
+    logic [15:0] diff_out;
+
+    // Instantiate the higher-order difference calculator
+    higher_order_difference #(
+        .N(2),
+        .WIDTH(16)
+    ) uut (
+        .clk(clk),
+        .reset(reset),
+        .valid_in(valid_in),
+        .y_in(y_in),
+        .valid_out(valid_out),
+        .diff_out(diff_out)
+    );
+
+    // Clock generation
+    initial begin
+        clk = 0;
+        forever #5 clk = ~clk;  // 10 ns clock period
+    end
+
+    // Stimulus generation
+    initial begin
+        reset = 1;
+        valid_in = 0;
+        y_in = 0;
+        #20 reset = 0;
+
+        #10 y_in = 16'd1; valid_in = 1;
+        #10 y_in = 16'd3;
+        #10 y_in = 16'd6;
+        #10 y_in = 16'd10;
+        #10 y_in = 16'd15;
+        #10 y_in = 16'd21;
+        #20 valid_in = 0;
+        
+        #100 $stop;
+    end
+endmodule

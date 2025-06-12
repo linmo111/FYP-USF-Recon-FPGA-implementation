@@ -1,0 +1,121 @@
+module reconstruction_top #(
+    parameter WIDTH = 16,  // Data width
+	 parameter pipe_delay =6,
+	 parameter LAMBDA =10,
+	 parameter FRACTIONAL_BITS =13
+) (
+    input  logic                  clk,           // Clock signal
+    input  logic                  reset,         // Reset signal
+    input  logic                  clk_en,      // Valid input signal
+    input  logic signed [31:0] adc_in, // y[k] (Modulo ADC output) 
+    output logic                  valid_out,     // Output valid signal
+    output logic signed [31:0] adc_out // g[k] (Final recovered sample)
+);  
+//	 const int pipe_delay= 5; // the number of clock cycles delay between the input and the final reconstruction
+
+    logic valid_diff, valid_residual, valid_reconstruction;
+    logic signed [WIDTH-1:0] diff_out;
+	 logic signed [WIDTH-1:0] reconstructed_sample;
+    
+
+    logic signed [WIDTH-1:0] modulo_residual_out;
+	 logic signed [WIDTH-1:0] residual_out;// ε_y[k] (Recovered residual)
+	 logic signed  [WIDTH-1:0] modulo_in_shift [pipe_delay:0];
+	 logic valid_in;     // Valid input signal
+	 logic second_cycle;
+//	 logic [WIDTH-1:0] diff_ou
+
+	// floating point input 
+	 
+	 float_to_fixed #(
+		.TOTAL_BITS(WIDTH),
+		.FRACTIONAL_BITS(FRACTIONAL_BITS)
+	 )inconv(
+		.float_in(adc_in),
+		.fixed_out(hod_in)
+	 );
+	 
+
+    // Module 1: Higher-Order Difference Calculator (2nd order)
+    higher_order_difference #(
+        .N(2),
+        .WIDTH(WIDTH)
+    ) diff_calc (
+        .clk(clk),
+		  .clk_en(clk_en),
+        .reset(reset),
+        .valid_in(valid_in),
+        .y_in(hod_in),
+        .valid_out(valid_diff),
+        .diff_out(diff_out) // Second-order difference output
+    );
+
+    // Module 2: Modulo Residual Calculator
+    modulo_residual #(
+        .WIDTH(WIDTH),
+        .LAMBDA(LAMBDA)
+    ) mod_residual (
+        .clk(clk),
+		  .clk_en(clk_en),
+        .reset(reset),
+		  
+        .valid_in(valid_diff),
+        .diff_in(diff_out), 
+        .valid_out(valid_residual),
+        .residual_out(modulo_residual_out)
+    );
+
+    // Module 3: Anti-Difference and Rounding
+    anti_difference_rounding #(
+        .WIDTH(WIDTH),
+        .LAMBDA(LAMBDA)
+    ) anti_diff (
+        .clk(clk),
+		  .clk_en(clk_en),
+        .reset(reset),
+        .valid_in(valid_residual),
+        .residual_diff_in(modulo_residual_out),
+        .valid_out(valid_reconstruction),
+        .residual_out(residual_out)
+    );
+	 
+	 
+
+	 assign valid_in = !second_cycle & clk_en;
+    always_ff @(posedge clk or posedge reset) begin
+			
+		  second_cycle <= clk_en;
+		  
+        if (reset) begin
+            reconstructed_sample <= 0;
+            valid_out <= 0;
+				modulo_in_shift [0] <= 0;
+				modulo_residual_out <=0;
+				valid_residual <=0;
+				residual_out <=0;
+				second_cycle <=0;
+        end 
+		  else begin
+		  valid_out <= valid_reconstruction;
+				if (clk_en) begin
+					
+		  // the following code is for pipelining, but now pipelining is gone 
+//					modulo_in_shift [0] <= adc_in;
+//					for (int i = 1; i <= pipe_delay; i++) begin
+//						 modulo_in_shift[i] <= modulo_in_shift[i-1];
+//					end
+					
+
+					reconstructed_sample <=  (valid_reconstruction) ? (adc_in+residual_out) : 0;
+		  end
+		  end
+    end
+	 fixed_to_float #(
+		.TOTAL_BITS(WIDTH),
+		.FRACTIONAL_BITS(FRACTIONAL_BITS)
+	 )outconv(
+		.fixed_in(reconstructed_sample),
+		.float_out(adc_out)
+	 );
+
+endmodule

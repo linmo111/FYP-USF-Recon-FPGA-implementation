@@ -1,0 +1,9 @@
+17:55:37 **** Incremental Build of configuration Nios II for project streaming_reconstruct ****
+make all 
+Info: Building ../streaming_reconstruct_bsp/
+D:/quartus18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../streaming_reconstruct_bsp/
+[BSP build complete]
+[streaming_reconstruct build complete]
+
+17:55:38 Build Finished (took 597ms)
+

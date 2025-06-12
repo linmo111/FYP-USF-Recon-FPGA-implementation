@@ -1,0 +1,58 @@
+module moving_average #(
+    parameter WINDOW_SIZE = 16,
+    parameter DATA_WIDTH = 24,
+    parameter SUM_WIDTH = 32
+) (
+    input logic clk,
+    input logic reset,
+    input logic signed [DATA_WIDTH-1:0] in_sample,
+    output logic signed [DATA_WIDTH-1:0] out_avg
+);
+
+    // Buffer to store the last WINDOW_SIZE samples
+    logic signed [DATA_WIDTH-1:0] buffer [0:WINDOW_SIZE-1];
+    logic [$clog2(WINDOW_SIZE)-1:0] index;
+    logic [15:0] sample_count;  // Track number of samples received
+
+    // Sum accumulator with extra width to prevent overflow
+    logic signed [SUM_WIDTH-1:0] sum;
+
+    // Initialization
+    always_ff @(posedge clk or posedge reset) begin
+        if (reset) begin
+            index <= 0;
+            sample_count <= 0;
+            sum <= 0;
+            for (int i = 0; i < WINDOW_SIZE; i++) begin
+                buffer[i] <= 0;
+            end
+        end else begin
+            // Subtract the oldest sample from the sum
+            sum <= sum - buffer[index];
+
+            // Store the new sample and update the sum
+            buffer[index] <= in_sample;
+            sum <= sum + in_sample;
+
+            // Update the buffer index
+            index <= (index + 1) % WINDOW_SIZE;
+
+            // Increment sample count until full
+            if (sample_count < WINDOW_SIZE) begin
+                sample_count <= sample_count + 1;
+            end
+        end
+    end
+
+    // Output calculation
+    always_comb begin
+        if (sample_count > 0) begin
+            // Divide the sum by the window size
+            // Shift right to maintain the Q9.14 fixed-point format
+            out_avg = sum / sample_count;
+        end else begin
+            out_avg = 0;
+        end
+    end
+
+endmodule

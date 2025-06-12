@@ -1,0 +1,25 @@
+22:38:14 **** Incremental Build of configuration Nios II for project test_valid ****
+make all 
+Info: Building ../test_valid_bsp/
+D:/quartus18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../test_valid_bsp/
+[BSP build complete]
+Info: Compiling test_valid.c to obj/default/test_valid.o
+nios2-elf-gcc -xc -MP -MMD -c -I../test_valid_bsp//HAL/inc -I../test_valid_bsp/ -I../test_valid_bsp//drivers/inc  -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall   -mno-hw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o obj/default/test_valid.o test_valid.c
+test_valid.c: In function 'main':
+test_valid.c:471:25: warning: unused variable 'end_time' [-Wunused-variable]
+     clock_t start_time, end_time;
+                         ^
+test_valid.c:471:13: warning: unused variable 'start_time' [-Wunused-variable]
+     clock_t start_time, end_time;
+             ^
+Info: Linking test_valid.elf
+nios2-elf-g++  -T'../test_valid_bsp//linker.x' -msys-crt0='../test_valid_bsp//obj/HAL/src/crt0.o' -msys-lib=hal_bsp -L../test_valid_bsp/   -Wl,-Map=test_valid.map   -O0 -g -Wall   -mno-hw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o test_valid.elf obj/default/test_valid.o -lm -msys-lib=m
+nios2-elf-insert test_valid.elf --thread_model hal --cpu_name nios2_qsys --qsys true --simulation_enabled false --id 0 --sidp 0x81078 --timestamp 1749053829 --stderr_dev jtag_uart --stdin_dev jtag_uart --stdout_dev jtag_uart --sopc_system_name DE10_NANO_QSYS --quartus_project_dir "D:/year4/fyp/ADC" --jdi D:/year4/fyp/ADC/software/test_valid_bsp/../../DE10_NANO_ADC.jdi --sopcinfo D:/year4/fyp/ADC/software/test_valid_bsp/../../DE10_NANO_QSYS.sopcinfo
+Info: (test_valid.elf) 93 KBytes program size (code + initialized data).
+Info:                  55 KBytes free for stack + heap.
+Info: Creating test_valid.objdump
+nios2-elf-objdump --disassemble --syms --all-header --source test_valid.elf >test_valid.objdump
+[test_valid build complete]
+
+22:38:16 Build Finished (took 1s.804ms)
+

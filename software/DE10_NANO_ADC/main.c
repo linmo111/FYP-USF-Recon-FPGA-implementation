@@ -1,0 +1,144 @@
+#include <stdio.h>
+#include <io.h>
+#include <unistd.h>
+#include <stdint.h>
+
+#include "system.h"
+// this file is to test if the ADC and DAC are working.
+
+#include "altera_avalon_i2c.h"  // Include Avalon I2C API
+
+#define ALT_CI_ADC_DAC_CONVERTER_0(A) __builtin_custom_ini(ALT_CI_ADC_DAC_CONVERTER_0_N,(A))
+#define ALT_CI_ADC_DAC_CONVERTER_0_N 0x0
+
+
+// Function to send data to the PCF8591T DAC
+int send_to_PCF(ALT_AVALON_I2C_DEV_t *i2c_dev, alt_u8 dac_value) {
+    alt_u8 txbuffer[2];  // Buffer to hold data to send
+    ALT_AVALON_I2C_STATUS_CODE status;
+
+    // Prepare the control byte and DAC data
+    txbuffer[0] = 0x40;     // Control byte: Enable DAC
+    txbuffer[1] = dac_value; // Data byte: Value to set DAC output
+
+    // Write the data to the DAC
+    status = alt_avalon_i2c_master_tx(i2c_dev, txbuffer, 2, ALT_AVALON_I2C_NO_INTERRUPTS);
+    if (status != ALT_AVALON_I2C_SUCCESS) {
+        printf("Error: I2C write to DAC failed with status code: %d\n", status);
+        return -1; // Return error
+    }
+
+    return 0; // Success
+}
+
+int send_to_LTC2607(ALT_AVALON_I2C_DEV_t *i2c_dev, uint8_t dac_channel, uint16_t value) {
+    uint8_t txbuffer[3];
+    ALT_AVALON_I2C_STATUS_CODE status;
+
+    // First byte: Command and DAC address
+//    txbuffer[0] = (0b0011 << 4) | (dac_channel & 0x0F); // Write & Update command with DAC address
+    txbuffer[0] = 0x30;
+    // Second and third bytes: 16-bit data (MSB first, then LSB)
+    txbuffer[1] = (value >> 8) & 0xFF; // Upper 8 bits
+    txbuffer[2] = value & 0xFF;        // Lower 8 bits
+
+    // Send the data over I2C
+    status = alt_avalon_i2c_master_tx(i2c_dev, txbuffer, 3, ALT_AVALON_I2C_NO_INTERRUPTS);
+    if (status != ALT_AVALON_I2C_SUCCESS) {
+        printf("Error: I2C write to LTC2607 failed with status code: %d\n", status);
+        return -1; // Failure
+    }
+
+    return 0; // Success
+}
+
+
+
+uint8_t DAC_ADC_Convert(float ADC_Val, float v_ref_ADC, float v_ref_DAC){
+	uint8_t DAC_val=0;
+	float ADC_unit= v_ref_ADC/(4096);
+	float DAC_unit= v_ref_DAC/(256);
+
+	DAC_val=(uint8_t)(ADC_Val*ADC_unit/DAC_unit);
+
+	return DAC_val;
+
+
+
+
+
+}
+
+
+
+
+void main(void){
+	int ch = 0;
+	const int nReadNum = 1; // max 1024
+	int i, Value, nIndex=0;
+	uint16_t DAC_val=0;
+//	printf("ADC Demo\r\n");
+    ALT_AVALON_I2C_DEV_t *i2c_dev;  // Pointer to I2C instance structure
+   // int adc_value = 0;             // Example ADC value to send
+    int result;
+
+    // Open the I2C device instance
+    i2c_dev = alt_avalon_i2c_open("/dev/i2c_dac");
+    if (NULL == i2c_dev) {
+        printf("Error: Cannot find /dev/i2c_dac\n");
+        return ;
+    }
+    ALT_AVALON_I2C_MASTER_CONFIG_t cfg;
+
+
+    // Set the target device address (PCF8591T address is typically 0x48)
+   alt_avalon_i2c_master_target_set(i2c_dev, 0x48);
+//     alt_avalon_i2c_master_target_set(i2c_dev, 0x72);
+     if (i2c_dev) {
+         alt_avalon_i2c_master_config_speed_set(i2c_dev,&cfg, 400000); // Set 400 kHz
+         alt_avalon_i2c_master_config_set(i2c_dev, &cfg);
+     }
+
+
+
+    IOWR(ADC_LTC2308_BASE, 0x01, nReadNum);
+	while(1){
+//		ch = IORD(SW_BASE, 0x00) & 0x07;
+
+//		printf("======================= %d, ch=%d\r\n", nIndex++, ch);
+		// set measure number for ADC convert
+
+		// start measure
+		IOWR(ADC_LTC2308_BASE, 0x00, (ch << 1) | 0x00);
+		IOWR(ADC_LTC2308_BASE, 0x00, (ch << 1) | 0x01);
+//		IOWR(ADC_LTC2308_BASE, 0x00, (ch << 1) | 0x00);
+//		usleep(1);
+
+		// wait measure done
+//		while ((IORD(ADC_LTC2308_BASE,0x00) & 0x01) == 0x00);
+
+		// read adc value
+		for(i=0;i<nReadNum;i++){
+			Value = IORD(ADC_LTC2308_BASE, 0x01);
+//			write_adc_value(Value);
+			DAC_val=ALT_CI_ADC_DAC_CONVERTER_0(Value);
+
+//			DAC_val=DAC_ADC_Convert(Value,4.096,5);
+			//pcf8591_write_dac(128);
+//			printf("calculated adc_VAL %d.\n", Value);
+//S			printf("calculated DAC_VAL %d.\n", DAC_val);
+
+	        result = send_to_PCF(i2c_dev, DAC_val);
+//			result = send_to_LTC2607(i2c_dev,0, (alt_u16)Value);
+	        if (result != 0) {
+	            printf("Failed to send data to DAC.\n");
+	            break;
+	        }
+
+
+//			/printf("CH%d=%.3fV (0x%04x)\r\n", ch, (float)Value/1000.0, DAC_val);
+		}
+
+//		usleep(200);
+	} // while
+}

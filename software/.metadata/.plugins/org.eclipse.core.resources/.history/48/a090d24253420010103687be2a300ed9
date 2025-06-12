@@ -1,0 +1,555 @@
+#include <stdio.h>
+#include <io.h>
+#include <unistd.h>
+#include <stdint.h>
+
+//#include "sys/alt_timestamp.h"
+
+//#include <stdlib.h>
+//#include <sys/alt_stdio.h>
+//#include <sys/alt_alarm.h>
+//#include <sys/times.h>
+//#include <alt_types.h>
+#include <system.h>
+
+
+#include <math.h>
+//#include <time.h>
+
+
+//#define ALT_CI_RECONSTRUCTION_TOP_0(A) __builtin_custom_ini(ALT_CI_RECONSTRUCTION_TOP_0_N,(A))
+//#define ALT_CI_RECONSTRUCTION_TOP_0_N 0x1
+#define ALT_CI_RECON_TOP_PIPELINE_0(A) __builtin_custom_ini(ALT_CI_RECON_TOP_PIPELINE_0_N,(A))
+#define ALT_CI_RECON_TOP_PIPELINE_0_N 0x0
+#define ALT_CI_RECONSTRUCTION_TOP_1(A) __builtin_custom_ini(ALT_CI_RECONSTRUCTION_TOP_1_N,(A))
+#define ALT_CI_RECONSTRUCTION_TOP_1_N 0x1
+#define MA_WINDOW_SIZE 100  // Size of the moving average window
+typedef struct {
+    float buffer[MA_WINDOW_SIZE];
+    int index;
+    int count;
+    float sum;
+} MovingAverage;
+void initMovingAverage(MovingAverage *ma) {
+    ma->index = 0;
+    ma->count = 0;
+    ma->sum = 0.0;
+
+    for (int i = 0; i < MA_WINDOW_SIZE; i++) {
+        ma->buffer[i] = 0.0;
+    }
+}
+
+/* Update the moving average with a new sample */
+float updateMovingAverage(MovingAverage *ma, float new_sample) {
+    // Remove the oldest sample from the sum
+    ma->sum -= ma->buffer[ma->index];
+
+    // Add the new sample to the buffer and sum
+    ma->buffer[ma->index] = new_sample;
+    ma->sum += new_sample;
+
+    // Update the index (circular buffer)
+    ma->index = (ma->index + 1) % MA_WINDOW_SIZE;
+
+    // Update the count (if less than window size)
+    if (ma->count < MA_WINDOW_SIZE) {
+        ma->count++;
+    }
+
+    // Compute the moving average
+    return ma->sum / ma->count;
+}
+
+#define MAX_ORDER 100
+#define MAX_J 5
+typedef struct {
+    float lam;
+    float prev_y;
+    float prev_eps;
+    int initialized;
+    float max_in;
+    int order;
+    int diff_reset;
+    int anti_diff_reset;
+    float diff_buffer[MAX_ORDER+1];
+    float anti_diff_buffer[MAX_ORDER+1];
+    float sampling_interval;
+//    int J;                      // buffer size (e.g. 10)
+//
+//    float s1[MAX_ORDER];          // first cumulative sum per layer
+//    float s2[MAX_ORDER];          // second cumulative sum per layer
+//    float s1_hist[MAX_ORDER][MAX_J]; // history of s2 for reset count
+//    float s2_hist[MAX_ORDER][MAX_J]; // history of s2 for reset count
+//    float in_hist[MAX_ORDER][MAX_J]; // history of s2 for reset count
+//    int res_index[MAX_ORDER];     // index for each layer
+
+
+
+} UnlimitedSamplerReconstructor;
+
+/* Initialize the reconstructor */
+void initReconstructor(UnlimitedSamplerReconstructor *recon, float lam) {
+    recon->lam = lam;
+    recon->prev_y = 0.0;
+    recon->prev_eps = 0.0;
+    recon->initialized = 0;
+    recon->max_in=0.001;
+    recon->sampling_interval=0.000001;
+    recon->diff_reset=0;
+    recon-> anti_diff_reset=0;
+//    recon->max_order=10;
+    recon->order=1;
+//    recon->J=MAX_J;
+
+    for (int i = 0; i < MAX_ORDER+1; i++) {
+        recon->diff_buffer[i] = 0.0;
+        recon->anti_diff_buffer[i] = 0.0;
+    }
+//    for (int i = 0; i < MAX_ORDER; ++i) {
+//        recon->s1[i] = 0.0f;
+//        recon->s2[i] = 0.0f;
+//        recon->res_index[i] = 0;
+//        for (int j = 0; j < MAX_J; ++j){
+//        	recon->s1_hist[i][j] = 0.0f;
+//            recon->s2_hist[i][j] = 0.0f;
+//        	recon->in_hist[i][j] = 0.0f;
+//    }
+//    }
+//    for (int i = 0; i <= MAX_ORDER; ++i)
+//        recon->anti_diff_buffer[i] = 0.0f;
+
+
+}
+float nth_order_difference(float new_sample,UnlimitedSamplerReconstructor *recon) {
+	float x = new_sample;
+	if (recon->diff_reset >0){
+		for (int i = 0; i <= recon->order; ++i){
+		recon->diff_buffer[i]=0;
+
+		}
+		recon->diff_reset=0;
+	}else
+	{
+		for (int i = 0; i <= recon->order; ++i) {
+	//        if (!init_done[i]) {
+	//            diff_buffers[i] = x;
+	//            init_done[i] = 1;
+	//            return 0.0;  // NaN to signal not ready
+	//        } else {
+			float delta = x - recon->diff_buffer[i];
+			recon->diff_buffer[i] = x;
+			x = delta;
+	//        }
+		}
+	}
+    return recon->diff_buffer[recon->order];
+}
+
+float anti_diff_nth(float diffN,UnlimitedSamplerReconstructor *recon) {
+	float x = diffN;  // the N-th difference input (Δⁿε[k])
+
+	for (int i = 0; i < recon->order-1; ++i) {
+//		int idx = recon->res_index[i] % recon->J;
+	    // 1. Integrate current level
+	    x = recon->anti_diff_buffer[i] + x;
+	    x=2.0 * recon->lam * round(x / (2.0 * recon->lam));
+//	    x+=2*recon->lam*(6*recon->max_in/recon->lam+1);
+	    recon->anti_diff_buffer[i] = x;
+
+
+//	    // 2. Update cumulative sums for this layer
+//	    recon->s1[i] = recon->s1[i]+x-recon->in_hist[i][idx];
+//	    recon->s2[i] = recon->s2[i]+recon->s1[i]-recon->s1_hist[i][idx];
+//	    recon->in_hist[i][idx]=x;
+//
+//
+//	    recon->s1_hist[i][idx]=recon->s1[i];
+//
+//	    float s2_past=recon->s2_hist[i][idx];
+//	    float s2_now= recon->s2[i];
+//	    recon->s2_hist[i][idx] = recon->s2[i];
+//	    recon->res_index[i]++;
+//
+//	    // 3. Estimate Kn only after J samples
+//	    int Kn = 0;
+//	    if (recon->res_index[i] >= recon->J) {
+//	        int now = (recon->res_index[i]-1) % recon->J;
+//	        int past = (recon->res_index[i]) % recon->J;
+//
+//	        float s2_now = recon->s2_hist[i][now];
+//	        float s2_past = recon->s2_hist[i][past];
+//	        float kn_est = (s2_now - s2_past) / (12.0f * recon->max_in);
+//
+//	        // Round to nearest integer
+//	        Kn = (int)(kn_est + 0.5f);  // floor(x + 0.5) for round
+
+	        // Optional clamping
+//	        if (Kn > 5) Kn = 5;
+//	        if (Kn < -5) Kn = -5;
+//	    }
+//	    printf("kn at layer %d= %d.\n", i,(Kn) );
+
+
+	    // 4. Apply correction
+
+
+//	    x += 1.0f * recon->lam * Kn;
+//	    printf("anti_diff_buffer at layer %d= %f.\n", i,recon->anti_diff_buffer[i] );
+
+	}
+
+	// Final integration
+	x = recon->anti_diff_buffer[recon->order-1] + x;
+	recon->anti_diff_buffer[recon->order-1] = x;
+
+	return x;  // final reconstructed sample g[k]
+}
+float anti_diff_3rd(float diffN,UnlimitedSamplerReconstructor *recon, MovingAverage *ma1,MovingAverage *ma2, MovingAverage *ma3) {
+	float x = diffN;  // the N-th difference input (Δⁿε[k])
+
+	x = recon->anti_diff_buffer[0] + x;
+	x=2.0 * recon->lam * round(x / (2.0 * recon->lam));
+	float avg1 = updateMovingAverage(ma1, x);
+
+	recon->anti_diff_buffer[0] = x;
+
+	x=x-avg1;
+
+	x = recon->anti_diff_buffer[1] + x;
+	x=2.0 * recon->lam * round(x / (2.0 * recon->lam));
+	float avg2 = updateMovingAverage(ma2, x);
+
+	recon->anti_diff_buffer[1] = x;
+	x=x-avg2;
+
+
+	// Final integration
+	x = recon->anti_diff_buffer[recon->order-1] + x;
+	x=2.0 * recon->lam * round(x / (2.0 * recon->lam));
+
+	recon->anti_diff_buffer[recon->order-1] = x;
+	float avg3 = updateMovingAverage(ma3, x);
+//	x = hpf_update(hpf, x);
+	x=x-avg3;
+
+	return x;  // final reconstructed sample g[k]
+}
+float anti_diff_2nd(float diffN,UnlimitedSamplerReconstructor *recon, MovingAverage *ma1,MovingAverage *ma2, MovingAverage *ma3) {
+	float x = diffN;  // the N-th difference input (Δⁿε[k])
+
+	x = recon->anti_diff_buffer[0] + x;
+	x=2.0 * recon->lam * round(x / (2.0 * recon->lam));
+	float avg1 = updateMovingAverage(ma1, x);
+
+	recon->anti_diff_buffer[0] = x;
+	x=x-avg1;
+
+
+
+	// Final integration
+	x = recon->anti_diff_buffer[recon->order-1] + x;
+	x=2.0 * recon->lam * round(x / (2.0 * recon->lam));
+
+	recon->anti_diff_buffer[recon->order-1] = x;
+	float avg2 = updateMovingAverage(ma2, x);
+//	x = hpf_update(hpf, x);
+	x=x-avg2;
+
+
+	return x;  // final reconstructed sample g[k]
+}
+float anti_diff_1st(float diffN,UnlimitedSamplerReconstructor *recon, MovingAverage *ma1,MovingAverage *ma2, MovingAverage *ma3) {
+	float x = diffN;  // the N-th difference input (Δⁿε[k])
+
+	// Final integration
+	x = recon->anti_diff_buffer[recon->order-1] + x;
+	x=2.0 * recon->lam * round(x / (2.0 * recon->lam));
+
+	recon->anti_diff_buffer[recon->order-1] = x;
+	float avg2 = updateMovingAverage(ma2, x);
+//	x = hpf_update(hpf, x);
+	x=x-avg2;
+
+
+	return x;  // final reconstructed sample g[k]
+}
+
+int calc_order(UnlimitedSamplerReconstructor *recon) {
+	float denominator = recon->sampling_interval * M_PI * M_E;
+
+    if (recon->lam <= 0 || recon->max_in <= 0 || denominator <= 0) {
+        // Handle invalid input
+        return 1;  // or any other error signal
+    }
+
+    float ratio = log(recon->lam) - log(recon->max_in);
+    float denom_log = log(denominator);
+    int N = (int)ceil(ratio / denom_log);
+//    return N;
+    if (N> MAX_ORDER){
+    	N=MAX_ORDER;
+    }
+    return N > 1 ? N : 1;
+}
+/* Centered modulo function into [-λ, λ) */
+float modulo(float x, float lam) {
+    float two_lam = 2.0 * lam;
+    float mod = fmod(x + lam, two_lam);
+    if (mod < 0) mod += two_lam;
+    return mod - lam;
+}
+float center_to_2lam(float x, float lam) {
+    return 2.0f * lam * roundf(x / (2.0f * lam));
+}
+//#define EPS_HISTORY_SIZE 10  // Like `J` in Python
+//
+//double eps_history[EPS_HISTORY_SIZE];
+//int eps_index = 0;
+/* Update function: process one sample */
+float update(UnlimitedSamplerReconstructor *recon, float yk,MovingAverage *ma1,MovingAverage *ma2,MovingAverage *ma3) {
+	if (yk> recon->max_in){
+		recon->max_in=(2*recon->lam)*round(yk/(2*recon->lam));
+
+
+	}
+	recon->order =1;
+
+
+    float dy= nth_order_difference(yk,recon);
+
+    // Step 2: Apply modulo to Δy[k]
+    float mod_dy = modulo(dy, recon->lam);
+
+    // Step 3: Compute Δε[k]
+    float delta_eps = mod_dy - dy;
+
+    // Step 4: Update ε[k], round to nearest 2λ
+//    recon->prev_eps += delta_eps;
+
+//    delta_eps=delta_eps-avg;
+
+//    recon->prev_eps =anti_diff_nth(delta_eps,recon);
+    if (recon->order ==2){
+    	recon->prev_eps =anti_diff_2nd(delta_eps,recon,ma1,ma2,ma3);
+    }
+    else if (recon->order ==1){
+    	recon->prev_eps =anti_diff_1st(delta_eps,recon,ma1,ma2,ma3);
+    }
+    else if (recon->order ==3){
+    	recon->prev_eps =anti_diff_3rd(delta_eps,recon,ma1,ma2,ma3);
+    }
+    else {
+    	printf("order not implemented");
+
+    }
+//     recon->prev_eps =anti_diff_nth(delta_eps,recon);
+
+
+//    recon->prev_eps += delta_eps;
+   // int kn = updateMovingAverage_in(ma_residual, recon->prev_eps,recon->max_in);
+//    printf("inhere\n");
+//    recon->prev_eps=recon->prev_eps+2*recon->lam*kn;
+
+//    recon->prev_eps = center_to_2lam(recon->prev_eps, recon->lam);
+
+//    eps_history[eps_index] = recon->prev_eps;
+//    eps_index = (eps_index + 1) % EPS_HISTORY_SIZE;
+//
+//    // Compute S² and apply Kn correction
+//    double s = 0, s2 = 0;
+//    for (int i = 0, idx = eps_index; i < EPS_HISTORY_SIZE; i++) {
+//        idx = (idx == 0) ? EPS_HISTORY_SIZE - 1 : idx - 1;
+//        s += eps_history[idx];
+//        s2 += s;
+//    }
+//
+//    double Bg = ceil(recon->max_in / (2.0 * recon->lam)) * 2.0 * recon->lam;
+//    double Kn = round((-s2) / (12.0 * Bg));
+//   printf("calculated kn_VAL %d.\n", kn);
+//  printf("calculated prev_eps_VAL %f.\n", recon->prev_eps);
+//    recon->prev_eps += 2.0 * kn ;
+//    printf("calculated prev_eps_VAL %f.\n", recon->prev_eps);
+//    float eps_k = 2.0 * recon->lam * round(recon->prev_eps / (2.0 * recon->lam));
+    float eps_k=recon->prev_eps;
+
+    // Step 5: Recover g[k]
+    float gk = yk + eps_k;
+//    printf("reconstructed val%f.\n", gk);
+
+    // Update state
+    recon->prev_y = yk;
+
+    return gk;
+}
+
+
+
+
+
+
+
+/* Initialize the moving average filter */
+
+
+
+
+uint8_t float_to_dac(float signal_value, int DAC_MAX_VALUE, float V_REF, float OFFSET) {
+    float dac_voltage;
+    uint8_t dac_value;
+
+    // Apply offset
+    dac_voltage = signal_value + OFFSET;
+
+    // Clamp to DAC range (0V to 5V)
+    if (dac_voltage < 0.0f) {
+        dac_voltage = 0.0f;
+    } else if (dac_voltage > V_REF) {
+        dac_voltage = V_REF;
+    }
+
+    // Convert to DAC value
+    dac_value = (uint8_t)((dac_voltage / V_REF) * DAC_MAX_VALUE);
+
+    return dac_value;
+}
+
+float convert_adc_to_signal(int adc_value, int ADC_MAX_VALUE, float V_REF, float OFFSET_VOLTAGE) {
+    // Calculate the input voltage
+    float input_voltage = (adc_value / (float)ADC_MAX_VALUE) * V_REF;
+
+    // Subtract the offset to get the original signal value
+    float signal_value = input_voltage - OFFSET_VOLTAGE;
+
+    return signal_value;
+}
+
+
+
+
+int top(int adc_value,UnlimitedSamplerReconstructor *recon, MovingAverage *ma1,MovingAverage *ma2,MovingAverage *ma3  ){
+
+	float signal_in=convert_adc_to_signal(adc_value,4095,4.096,0);
+	float reconstructed_val=update(recon, signal_in,ma1,ma2,ma3);
+//	printf("reconstructed val = %f \n", reconstructed_val);
+//	float avg = updateMovingAverage(ma1, reconstructed_val);
+//	reconstructed_val=reconstructed_val-avg;
+//	avg = updateMovingAverage(ma2, reconstructed_val);
+//	int dac_out=float_to_dac(reconstructed_val-avg,255,5,1.5);
+//	float hpf_filtered = hpf_update(hpf, subtracted_avg);
+//	float hpf2_filtered = second_order_hpf_update(hpf2, subtracted_avg);
+//	int dac_out=float_to_dac(signal_in,255,5,1.5);
+	int dac_out=float_to_dac(reconstructed_val,255,5,2);
+
+	return dac_out;
+}
+
+
+//#define total_num 100000
+#define num_times_ran 1
+#define dataset_size 10000
+void generate_test_data(int data[dataset_size] , int min, int max) {
+    for (int i = 0; i < dataset_size; i++) {
+        data[i] = i%max;
+    }
+}
+
+
+void initialize_pipeline(){
+
+	for (int i = 0; i < 100; i++){
+		ALT_CI_RECON_TOP_PIPELINE_0(0);
+	}
+}
+
+
+int main() {
+	float lam=0.75;
+    UnlimitedSamplerReconstructor recon;
+    initReconstructor(&recon, lam);
+    clock_t start_time, end_time;
+//    unsigned int time_spent;
+//    if (alt_timestamp_start() < 0) {
+//        printf("Timestamp not available\n");
+
+//    }
+    printf("running \n");
+    initialize_pipeline();
+    MovingAverage ma;
+    initMovingAverage(&ma);
+    MovingAverage ma2;
+    initMovingAverage(&ma2);
+    MovingAverage ma3;
+    initMovingAverage(&ma3);
+
+
+    // Example float32 data (converted from your file)
+//	float data[] = {0.0f, 0.0f,1.0f,0.0f,1.0f, 1.0f,  0.0f,0.0f, 0.0f,0.0f,0.0f,0.0f, 0.0f,  0.0f};
+    int data[] = {0, 0,1000,1000,1000, 1000,  1000,1000, 0,0};  // <- Replace with your actual values
+//    float data[] = {-0.0175935030f, -0.0175935030ff,-0.0175935030f,-0.0175935030f,-0.0175935030f, 0.0f};  // <- Replace with your actual values
+//	int =10000;
+//	int datatest[dataset_size];
+//	generate_test_data(datatest,1,400);
+	printf("data test set generation done \n");
+//	int longtest[]={};
+//	for (int i = 0; i < 100; i++){
+//		int temp=ALT_CI_RECON_TOP_PIPELINE_0(0);
+//		printf("initialize hardware_ip %d res = %d  \n", i,temp);
+////		int ref=top(data[i],&recon,&ma);
+////		printf(" ref res = %d  \n", ref);
+//
+//	}
+	for (int i = 0; i < 10; i++){
+//		int temp=ALT_CI_RECON_TOP_PIPELINE_0(data[i]);
+//		printf(" hardware_ip res = %d  \n", temp);
+		int ref=top(data[i],&recon,&ma,&ma2,&ma3);
+		printf(" ref res = %d  \n", ref);
+//		int href=ALT_CI_RECONSTRUCTION_TOP_1(data[i]);
+
+//		printf(" hardware ref res = %d  \n", href);
+		printf("\n");
+
+	}
+//	for (int i = 0; i < 200; i++){
+//		int temp=ALT_CI_RECON_TOP_PIPELINE_0(0);
+//		printf(" hardware_ip %d res = %d  \n", i+10,temp);
+//		int href=ALT_CI_RECONSTRUCTION_TOP_1(0);
+//		top(data[i],&recon,&ma);
+//		printf(" hardware ref res = %d  \n", href);
+//		printf("\n");
+////		int ref=top(data[i],&recon,&ma);
+////		printf(" ref res = %d  \n", ref);
+//
+//	}
+//	for (int i = 0; i < 10; i++){
+//		int temp=ALT_CI_RECON_TOP_PIPELINE_0(data[i]);
+//		printf(" hardware_ip res = %d  \n", temp);
+//		int ref=top(data[i],&recon,&ma);
+//		printf(" ref res = %d  \n", ref);
+//		int href=ALT_CI_RECONSTRUCTION_TOP_1(data[i]);
+//
+//		printf(" hardware ref res = %d  \n", href);
+//		printf("\n");
+//
+//	}
+
+//    int data_len = sizeof(data) / sizeof(data[0]);
+//    int data_len = sizeof(datatest);
+//    float sum=0;
+    // Print the array contents
+//    int sum_of_squared_diff=0;
+//		for (int i = 0; i < sizeof(data); i++) {
+//////        printf("data[%d] = %f\n", i, data[i]);
+////		int model=ALT_CI_RECON_TOP_PIPELINE_0_N(datatest[i]);
+//		int ref=top(data[i],&recon,&ma);
+////
+//
+//		int diff = ref - model;
+//		sum_of_squared_diff += diff * diff;
+////		printf("diff on %d samples: %d\n", i, diff);
+//
+//	}
+//
+
+    return 0;
+}

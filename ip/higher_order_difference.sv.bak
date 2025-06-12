@@ -1,0 +1,51 @@
+module higher_order_difference #(
+    parameter N = 2,             // Order of difference
+    parameter WIDTH = 16         // Data width of input/output
+) (
+    input  logic                  clk,           // Clock signal
+    input  logic                  reset,         // Reset signal
+    //input  logic                  valid_in,      // Valid input signal
+    input  logic [WIDTH-1:0]      y_in,          // Input signal y[k]
+    output logic                  valid_out,     // Output valid signal
+    output logic [WIDTH-1:0]      diff_out       // N-th order difference output
+);
+
+    // Internal registers for shift registers
+    logic [WIDTH-1:0] shift_reg [0:N];  // Stores N+1 samples for recursive differences
+    logic [WIDTH-1:0] differences [0:N-1];  // Temporary storage for differences
+    logic [3:0]       stage_counter;  // Tracks processing stage
+    logic [WIDTH-1:0] pref_1st_diff;
+
+    // Initialize registers
+    always_ff @(posedge clk or posedge reset) begin
+        if (reset) begin
+            for (int i = 0; i <= N; i++) begin
+                shift_reg[i] <= 0;
+            end
+            stage_counter <= 0;
+            valid_out <= 0;
+        end
+	else begin
+            // Shift incoming data into the shift register
+            shift_reg[0] <= y_in;
+            for (int i = 1; i <= N; i++) begin
+                shift_reg[i] <= shift_reg[i-1];
+            end
+            
+            // Compute first-order difference
+            differences[0] <= shift_reg[0] - shift_reg[1];
+	
+            
+            // Compute higher-order differences iteratively
+           // for (int j = 1; j < N; j++) begin
+            differences[1] <= differences[0] - pref_1st_diff;
+	    pref_1st_diff <= differences[0];
+           // end
+
+            // Output the final N-th order difference
+            diff_out <= differences[1];
+            valid_out <= 1;
+        end
+    end
+
+endmodule

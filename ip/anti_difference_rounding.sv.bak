@@ -1,0 +1,39 @@
+module anti_difference_rounding #(
+    parameter WIDTH = 16,        // Data width
+    parameter LAMBDA = 10        // Modulo threshold λ
+) (
+    input  logic                  clk,          // Clock signal
+    input  logic                  reset,        // Reset signal
+    input  logic                  valid_in,     // Valid input signal
+    input  logic signed [WIDTH-1:0] residual_diff_in, // Residual difference Δ^2 ε_y[k]
+    output logic                  valid_out,    // Output valid signal
+    output logic signed [WIDTH-1:0] residual_out // Recovered ε_y[k]
+);
+
+    // Internal registers to store previous values
+    logic signed [WIDTH-1:0] first_order_diff;  // Stores Δε_y[k]
+    logic signed [WIDTH-1:0] residual;         // Stores ε_y[k]
+
+    always_ff @(posedge clk or posedge reset) begin
+        if (reset) begin
+            first_order_diff <= 0;
+            residual <= 0;
+            valid_out <= 0;
+        end else if (valid_in) begin
+            // Step 1: Compute first-order difference (cumulative sum)
+            first_order_diff <= first_order_diff + residual_diff_in;
+
+            // Step 2: Compute residual function (cumulative sum)
+            residual <= residual + first_order_diff;
+
+            // Step 3: Round to nearest multiple of 2λ
+            residual_out <= (residual + (LAMBDA)) / (2 * LAMBDA) * (2 * LAMBDA);
+
+            // Output valid signal
+            valid_out <= 1;
+        end else begin
+            valid_out <= 0;
+        end
+    end
+
+endmodule

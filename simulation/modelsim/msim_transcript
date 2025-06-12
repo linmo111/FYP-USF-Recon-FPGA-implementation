@@ -1,0 +1,126 @@
+# vsim -gui -l msim_transcript work.aa_tb_top_pipe_n 
+# Start time: 20:42:35 on Jun 10,2025
+# Loading sv_std.std
+# Loading work.aa_tb_top_pipe_n
+# Loading work.reconstruction_top_pipelined_n
+# Loading work.adc_to_fixed
+# Loading work.higher_order_difference_n
+# Loading work.modulo_residual_piped
+# Loading work.mod_divide
+# Loading work.lpm_divide
+# Loading work.LPM_HINT_EVALUATION
+# Loading work.anti_difference_stage
+# Loading work.anti_difference_rounding
+# Loading work.anti_diff_div
+# Loading work.moving_average
+# Loading work.avg_div
+# Loading work.fixed_to_dac
+# ** Warning: (vsim-3015) D:/year4/fyp/ADC/ip/Higher_orders/tb_piped_n.sv(26): [PCDPC] - Port size (8) does not match connection size (32) for port 'dac_out'. The port definition is at: D:/year4/fyp/ADC/ip/Higher_orders/top_piped_n2.sv(16).
+#    Time: 0 ps  Iteration: 0  Instance: /aa_tb_top_pipe_n/uut File: D:/year4/fyp/ADC/ip/Higher_orders/top_piped_n2.sv
+# ** Warning: (vsim-3015) D:/year4/fyp/ADC/ip/moving_average.sv(35): [PCDPC] - Port size (24) does not match connection size (32) for port 'denom'. The port definition is at: D:/year4/fyp/ADC/avg_div.v(43).
+#    Time: 0 ps  Iteration: 0  Instance: /aa_tb_top_pipe_n/uut/stage_1/mov_avg/avg_div_inst File: D:/year4/fyp/ADC/avg_div.v
+# ** Warning: (vsim-3015) D:/year4/fyp/ADC/ip/moving_average.sv(35): [PCDPC] - Port size (48) does not match connection size (32) for port 'quotient'. The port definition is at: D:/year4/fyp/ADC/avg_div.v(45).
+#    Time: 0 ps  Iteration: 0  Instance: /aa_tb_top_pipe_n/uut/stage_1/mov_avg/avg_div_inst File: D:/year4/fyp/ADC/avg_div.v
+# ** Warning: (vsim-3015) D:/year4/fyp/ADC/ip/moving_average.sv(35): [PCDPC] - Port size (24) does not match connection size (32) for port 'remain'. The port definition is at: D:/year4/fyp/ADC/avg_div.v(46).
+#    Time: 0 ps  Iteration: 0  Instance: /aa_tb_top_pipe_n/uut/stage_1/mov_avg/avg_div_inst File: D:/year4/fyp/ADC/avg_div.v
+# ** Warning: (vsim-3015) D:/year4/fyp/ADC/ip/moving_average.sv(35): [PCDPC] - Port size (24) does not match connection size (32) for port 'denom'. The port definition is at: D:/year4/fyp/ADC/avg_div.v(43).
+#    Time: 0 ps  Iteration: 0  Instance: /aa_tb_top_pipe_n/uut/stage_2/mov_avg/avg_div_inst File: D:/year4/fyp/ADC/avg_div.v
+# ** Warning: (vsim-3015) D:/year4/fyp/ADC/ip/moving_average.sv(35): [PCDPC] - Port size (48) does not match connection size (32) for port 'quotient'. The port definition is at: D:/year4/fyp/ADC/avg_div.v(45).
+#    Time: 0 ps  Iteration: 0  Instance: /aa_tb_top_pipe_n/uut/stage_2/mov_avg/avg_div_inst File: D:/year4/fyp/ADC/avg_div.v
+# ** Warning: (vsim-3015) D:/year4/fyp/ADC/ip/moving_average.sv(35): [PCDPC] - Port size (24) does not match connection size (32) for port 'remain'. The port definition is at: D:/year4/fyp/ADC/avg_div.v(46).
+#    Time: 0 ps  Iteration: 0  Instance: /aa_tb_top_pipe_n/uut/stage_2/mov_avg/avg_div_inst File: D:/year4/fyp/ADC/avg_div.v
+# ** Warning: (vsim-3015) D:/year4/fyp/ADC/ip/moving_average.sv(35): [PCDPC] - Port size (24) does not match connection size (32) for port 'denom'. The port definition is at: D:/year4/fyp/ADC/avg_div.v(43).
+#    Time: 0 ps  Iteration: 0  Instance: /aa_tb_top_pipe_n/uut/stage_3/mov_avg/avg_div_inst File: D:/year4/fyp/ADC/avg_div.v
+# ** Warning: (vsim-3015) D:/year4/fyp/ADC/ip/moving_average.sv(35): [PCDPC] - Port size (48) does not match connection size (32) for port 'quotient'. The port definition is at: D:/year4/fyp/ADC/avg_div.v(45).
+#    Time: 0 ps  Iteration: 0  Instance: /aa_tb_top_pipe_n/uut/stage_3/mov_avg/avg_div_inst File: D:/year4/fyp/ADC/avg_div.v
+# ** Warning: (vsim-3015) D:/year4/fyp/ADC/ip/moving_average.sv(35): [PCDPC] - Port size (24) does not match connection size (32) for port 'remain'. The port definition is at: D:/year4/fyp/ADC/avg_div.v(46).
+#    Time: 0 ps  Iteration: 0  Instance: /aa_tb_top_pipe_n/uut/stage_3/mov_avg/avg_div_inst File: D:/year4/fyp/ADC/avg_div.v
+vsim -gui -l msim_transcript work.aa_tb_top_pipe_n
+# End time: 20:42:51 on Jun 10,2025, Elapsed time: 0:00:16
+# Errors: 0, Warnings: 10
+# vsim -gui -l msim_transcript work.aa_tb_top_pipe_n 
+# Start time: 20:42:51 on Jun 10,2025
+# Loading sv_std.std
+# Loading work.aa_tb_top_pipe_n
+# Loading work.reconstruction_top_pipelined_n
+# Loading work.adc_to_fixed
+# Loading work.higher_order_difference_n
+# Loading work.modulo_residual_piped
+# Loading work.mod_divide
+# Loading work.lpm_divide
+# Loading work.LPM_HINT_EVALUATION
+# Loading work.anti_difference_stage
+# Loading work.anti_difference_rounding
+# Loading work.anti_diff_div
+# Loading work.moving_average
+# Loading work.avg_div
+# Loading work.fixed_to_dac
+# ** Warning: (vsim-3015) D:/year4/fyp/ADC/ip/Higher_orders/tb_piped_n.sv(26): [PCDPC] - Port size (8) does not match connection size (32) for port 'dac_out'. The port definition is at: D:/year4/fyp/ADC/ip/Higher_orders/top_piped_n2.sv(16).
+#    Time: 0 ps  Iteration: 0  Instance: /aa_tb_top_pipe_n/uut File: D:/year4/fyp/ADC/ip/Higher_orders/top_piped_n2.sv
+# ** Warning: (vsim-3015) D:/year4/fyp/ADC/ip/moving_average.sv(35): [PCDPC] - Port size (24) does not match connection size (32) for port 'denom'. The port definition is at: D:/year4/fyp/ADC/avg_div.v(43).
+#    Time: 0 ps  Iteration: 0  Instance: /aa_tb_top_pipe_n/uut/stage_1/mov_avg/avg_div_inst File: D:/year4/fyp/ADC/avg_div.v
+# ** Warning: (vsim-3015) D:/year4/fyp/ADC/ip/moving_average.sv(35): [PCDPC] - Port size (48) does not match connection size (32) for port 'quotient'. The port definition is at: D:/year4/fyp/ADC/avg_div.v(45).
+#    Time: 0 ps  Iteration: 0  Instance: /aa_tb_top_pipe_n/uut/stage_1/mov_avg/avg_div_inst File: D:/year4/fyp/ADC/avg_div.v
+# ** Warning: (vsim-3015) D:/year4/fyp/ADC/ip/moving_average.sv(35): [PCDPC] - Port size (24) does not match connection size (32) for port 'remain'. The port definition is at: D:/year4/fyp/ADC/avg_div.v(46).
+#    Time: 0 ps  Iteration: 0  Instance: /aa_tb_top_pipe_n/uut/stage_1/mov_avg/avg_div_inst File: D:/year4/fyp/ADC/avg_div.v
+# ** Warning: (vsim-3015) D:/year4/fyp/ADC/ip/moving_average.sv(35): [PCDPC] - Port size (24) does not match connection size (32) for port 'denom'. The port definition is at: D:/year4/fyp/ADC/avg_div.v(43).
+#    Time: 0 ps  Iteration: 0  Instance: /aa_tb_top_pipe_n/uut/stage_2/mov_avg/avg_div_inst File: D:/year4/fyp/ADC/avg_div.v
+# ** Warning: (vsim-3015) D:/year4/fyp/ADC/ip/moving_average.sv(35): [PCDPC] - Port size (48) does not match connection size (32) for port 'quotient'. The port definition is at: D:/year4/fyp/ADC/avg_div.v(45).
+#    Time: 0 ps  Iteration: 0  Instance: /aa_tb_top_pipe_n/uut/stage_2/mov_avg/avg_div_inst File: D:/year4/fyp/ADC/avg_div.v
+# ** Warning: (vsim-3015) D:/year4/fyp/ADC/ip/moving_average.sv(35): [PCDPC] - Port size (24) does not match connection size (32) for port 'remain'. The port definition is at: D:/year4/fyp/ADC/avg_div.v(46).
+#    Time: 0 ps  Iteration: 0  Instance: /aa_tb_top_pipe_n/uut/stage_2/mov_avg/avg_div_inst File: D:/year4/fyp/ADC/avg_div.v
+# ** Warning: (vsim-3015) D:/year4/fyp/ADC/ip/moving_average.sv(35): [PCDPC] - Port size (24) does not match connection size (32) for port 'denom'. The port definition is at: D:/year4/fyp/ADC/avg_div.v(43).
+#    Time: 0 ps  Iteration: 0  Instance: /aa_tb_top_pipe_n/uut/stage_3/mov_avg/avg_div_inst File: D:/year4/fyp/ADC/avg_div.v
+# ** Warning: (vsim-3015) D:/year4/fyp/ADC/ip/moving_average.sv(35): [PCDPC] - Port size (48) does not match connection size (32) for port 'quotient'. The port definition is at: D:/year4/fyp/ADC/avg_div.v(45).
+#    Time: 0 ps  Iteration: 0  Instance: /aa_tb_top_pipe_n/uut/stage_3/mov_avg/avg_div_inst File: D:/year4/fyp/ADC/avg_div.v
+# ** Warning: (vsim-3015) D:/year4/fyp/ADC/ip/moving_average.sv(35): [PCDPC] - Port size (24) does not match connection size (32) for port 'remain'. The port definition is at: D:/year4/fyp/ADC/avg_div.v(46).
+#    Time: 0 ps  Iteration: 0  Instance: /aa_tb_top_pipe_n/uut/stage_3/mov_avg/avg_div_inst File: D:/year4/fyp/ADC/avg_div.v
+add wave -position end  sim:/aa_tb_top_pipe_n/valid_out
+add wave -position end  sim:/aa_tb_top_pipe_n/test_in
+add wave -position end  sim:/aa_tb_top_pipe_n/start
+add wave -position end  sim:/aa_tb_top_pipe_n/reset
+add wave -position end  sim:/aa_tb_top_pipe_n/reconstructed_sample
+add wave -position end  sim:/aa_tb_top_pipe_n/n
+add wave -position end  sim:/aa_tb_top_pipe_n/delay
+add wave -position end  sim:/aa_tb_top_pipe_n/clk_en
+add wave -position end  sim:/aa_tb_top_pipe_n/clk
+add wave -position end  sim:/aa_tb_top_pipe_n/adc_input
+add wave -position end  sim:/aa_tb_top_pipe_n/uut/stage_1/valid_out
+add wave -position end  sim:/aa_tb_top_pipe_n/uut/stage_2/valid_out
+add wave -position end  sim:/aa_tb_top_pipe_n/uut/stage_3/valid_out
+add wave -position end  sim:/aa_tb_top_pipe_n/uut/adc_out_piped[59]
+add wave -position end  sim:/aa_tb_top_pipe_n/uut/adc_out_piped[103]
+add wave -position end  sim:/aa_tb_top_pipe_n/uut/adc_out_piped[147]
+run -all
+# ** Note: $stop    : D:/year4/fyp/ADC/ip/Higher_orders/tb_piped_n.sv(139)
+#    Time: 17180 ns  Iteration: 0  Instance: /aa_tb_top_pipe_n
+# Break in Module aa_tb_top_pipe_n at D:/year4/fyp/ADC/ip/Higher_orders/tb_piped_n.sv line 139
+add wave -position 12  sim:/aa_tb_top_pipe_n/uut/adc_out_piped[60]
+# Compile of tb_modulo_residual.sv was successful.
+# Compile of modulo_residual.sv was successful.
+# Compile of tb_usf.sv was successful.
+# Compile of reconstruction_top.sv was successful.
+# Compile of higher_order_difference.sv was successful.
+# Compile of anti_difference_rounding.sv was successful.
+# Compile of adr_tb.sv was successful.
+# Compile of fixed_to_float.sv was successful.
+# Compile of floating_to_fixed.sv was successful.
+# Compile of mod_divide.v was successful.
+# Compile of anti_diff_div.v was successful.
+# Compile of 220model.v was successful.
+# Compile of moving_average.sv was successful.
+# Compile of avg_div.v was successful.
+# Compile of adc_to_fixed.sv was successful.
+# Compile of fixed_to_dac.sv was successful with warnings.
+# Compile of top_pipelined.sv was successful.
+# Compile of tb_pipe.sv was successful.
+# Compile of modulo_residual_piped.sv was successful.
+# Compile of tb_piped_n.sv was successful.
+# Compile of top_piped_n2.sv was successful.
+# Compile of ADR_n.sv was successful.
+# Compile of HOD_n.sv was successful.
+# Compile of anti_difference_stage.sv was successful.
+# 24 compiles, 0 failed with no errors.
+# Break key hit
+# End time: 21:33:13 on Jun 10,2025, Elapsed time: 0:50:22
+# Errors: 0, Warnings: 10

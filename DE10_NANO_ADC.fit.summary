@@ -1,0 +1,20 @@
+Fitter Status : Successful - Tue Jun 10 20:53:36 2025
+Quartus Prime Version : 18.1.0 Build 625 09/12/2018 SJ Lite Edition
+Revision Name : DE10_NANO_ADC
+Top-level Entity Name : DE10_NANO_ADC
+Family : Cyclone V
+Device : 5CSEBA6U23I7
+Timing Models : Final
+Logic utilization (in ALMs) : 6,882 / 41,910 ( 16 % )
+Total registers : 11459
+Total pins : 75 / 314 ( 24 % )
+Total virtual pins : 0
+Total block memory bits : 1,371,439 / 5,662,720 ( 24 % )
+Total RAM Blocks : 199 / 553 ( 36 % )
+Total DSP Blocks : 5 / 112 ( 4 % )
+Total HSSI RX PCSs : 0
+Total HSSI PMA RX Deserializers : 0
+Total HSSI TX PCSs : 0
+Total HSSI PMA TX Serializers : 0
+Total PLLs : 1 / 6 ( 17 % )
+Total DLLs : 0 / 4 ( 0 % )

@@ -1,0 +1,127 @@
+module modulo_residual_piped #(
+    parameter WIDTH = 32,          // Data width of input/output
+    parameter LAMBDA = 0.75,          // Modulo threshold λ
+	 parameter block_delay=13,
+	 parameter FRACTIONAL_BITS =20
+) (
+    input  logic                  clk,           // Clock signal
+    input  logic                  reset,         // Reset signal
+    input  logic                  valid_in,      // Valid input signal
+	 input	logic 						clk_en,
+    input  logic signed [WIDTH-1:0] diff_in,     // Higher-order difference Δ^N y[k]
+    output logic                  valid_out,     // Output valid signal
+    output logic signed [WIDTH-1:0] residual_out // Modulo residual Δ^N ε_y[k]
+);
+
+    // Internal signal for modulo operation
+    logic signed [WIDTH-1:0] modulo_result;
+	 logic [block_delay-1:0] valid_out_shift;
+//	 parameter logic[WIDTH-1:0] lambda_shifted, two_lambda_shifted;
+	 
+//	 reg signed [WIDTH-1:0] residual_intermediate1,residual_intermediate2,residual_intermediate3;
+//	 reg signed [WIDTH-1-8:0] residual_intermediate4;
+	 localparam logic signed [WIDTH-1:0] lambda_shifted = LAMBDA ;
+//	 assign two_lambda_shifted= 1;
+	 localparam logic signed [WIDTH-1:0] two_lambda_shifted= (LAMBDA )*2;
+    // Centered modulo operation
+	 
+	 logic signed [WIDTH-1:0] mod_denom, mod_numer, mod_quotient, mod_remain;
+	 
+mod_divide	mod_divide_inst (
+	.clock ( clk ),
+	.clken (clk_en),
+	.aclr(reset),
+	.denom ( mod_denom ),
+	.numer ( mod_numer ),
+	.quotient ( mod_quotient ),
+	.remain ( mod_remain )
+	);
+
+	 
+	 
+	 
+    always_ff @(posedge clk or posedge reset) begin
+        if (reset) begin
+            modulo_result <= 0;
+            residual_out <= 0;
+            valid_out <= 0;
+				valid_out_shift<=0;
+//				residual_intermediate1<=0;
+				mod_denom<=0;
+				mod_numer<=0;
+        end 
+		  else begin
+
+					
+					
+				if (clk_en) begin
+					valid_out_shift[0] <= valid_in;
+					
+					for (int i = 1; i <= block_delay-1; i++) begin
+						 valid_out_shift[i] <= valid_out_shift[i-1];
+					end
+			
+					valid_out <= valid_out_shift[block_delay-1];
+						
+					
+						
+		  
+//				if (valid_in) begin
+            // Centered modulo operation: 
+//				(a % b + b) % b
+//		(a % b + b) % b
+//				residual_out <= (diff_in + LAMBDA) % (2 * LAMBDA) - LAMBDA-diff_in;
+				
+			
+				if (valid_in) begin
+//					residual_intermediate1 <= (diff_in+lambda_shifted);
+				
+					mod_numer <= diff_in + lambda_shifted;
+					mod_denom <= two_lambda_shifted;
+					
+					
+				end
+				if (valid_out_shift[block_delay-1]) begin
+				
+					residual_out<=mod_remain- lambda_shifted-diff_in;
+				end
+
+//				if (valid_out_shift[0]) begin
+//					residual_intermediate2 <= (residual_intermediate1)% (two_lambda_shifted);
+//					
+//				end
+//				
+//				if (valid_out_shift[1]) begin
+//					residual_intermediate3 <= (residual_intermediate1+two_lambda_shifted);
+//					
+//				end
+//				if (valid_out_shift[2]) begin
+//					residual_intermediate4 <= $signed(({residual_intermediate3[WIDTH-1:8]}))% $signed((two_lambda_shifted[WIDTH-1:8]));
+//					
+//				end
+//				if (valid_out_shift[block_delay-1]) begin
+//				residual_out<={residual_intermediate4,8'b0} - lambda_shifted-diff_in;
+////				residual_out <= {{residual_intermediate4[23]}*7,residual_intermediate4[16:0],10'b0} - lambda_shifted-diff_in;
+//				
+//				end
+				//            if (diff_in >= LAMBDA) begin
+//                modulo_result <= diff_in - (2 * LAMBDA);
+//            end else if (diff_in < -LAMBDA) begin
+//                modulo_result <= diff_in + (2 * LAMBDA);
+//            end else begin
+//                modulo_result <= diff_in;  // No folding needed
+//            end
+				end
+            // Compute residual: residual_out = modulo_result - diff_in
+//            residual_out <= modulo_result ;
+
+            // Output valid signal
+//            valid_out <= 1;
+//        end else begin
+////            valid_out <= 0;
+//        end
+//				end
+		  end
+    end
+
+endmodule

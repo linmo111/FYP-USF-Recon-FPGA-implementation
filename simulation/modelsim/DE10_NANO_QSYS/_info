@@ -1,0 +1,706 @@
+m255
+K4
+z2
+13
+!s112 1.1
+!i10d 8192
+!i10e 25
+!i10f 100
+cModel Technology
+Z0 dD:/year4/fyp/ADC/simulation/modelsim
+valtera_avalon_i2c
+Z1 !s110 1749584535
+!i10b 1
+!s100 i;I80YB`l0<cOH0Mh0OXC2
+If[AlfEm8WPlm=?khB9J4L1
+Z2 VDg1SIo80bB@j0V0VzS_@n1
+R0
+Z3 w1749582319
+8D:/year4/fyp/ADC/DE10_NANO_QSYS/synthesis/submodules/altera_avalon_i2c.v
+FD:/year4/fyp/ADC/DE10_NANO_QSYS/synthesis/submodules/altera_avalon_i2c.v
+Z4 L0 18
+Z5 OV;L;10.5b;63
+r1
+!s85 0
+31
+Z6 !s108 1749584535.000000
+!s107 D:/year4/fyp/ADC/DE10_NANO_QSYS/synthesis/submodules/altera_avalon_i2c.v|
+!s90 -reportprogress|300|-vlog01compat|-work|DE10_NANO_QSYS|+incdir+D:/year4/fyp/ADC/DE10_NANO_QSYS/synthesis/submodules|D:/year4/fyp/ADC/DE10_NANO_QSYS/synthesis/submodules/altera_avalon_i2c.v|
+!i113 1
+Z7 o-vlog01compat -work DE10_NANO_QSYS
+Z8 !s92 -vlog01compat -work DE10_NANO_QSYS +incdir+D:/year4/fyp/ADC/DE10_NANO_QSYS/synthesis/submodules
+Z9 tCvgOpt 0
+valtera_avalon_i2c_clk_cnt
+R1
+!i10b 1
+!s100 CAQU3PEJGHFhmUSJ9nV@02
+IW`1=>VUH17aYJf?6Q;29L1
+R2
+R0
+R3
+8D:/year4/fyp/ADC/DE10_NANO_QSYS/synthesis/submodules/altera_avalon_i2c_clk_cnt.v
+FD:/year4/fyp/ADC/DE10_NANO_QSYS/synthesis/submodules/altera_avalon_i2c_clk_cnt.v
+R4
+R5
+r1
+!s85 0
+31
+R6
+!s107 D:/year4/fyp/ADC/DE10_NANO_QSYS/synthesis/submodules/altera_avalon_i2c_clk_cnt.v|
+!s90 -reportprogress|300|-vlog01compat|-work|DE10_NANO_QSYS|+incdir+D:/year4/fyp/ADC/DE10_NANO_QSYS/synthesis/submodules|D:/year4/fyp/ADC/DE10_NANO_QSYS/synthesis/submodules/altera_avalon_i2c_clk_cnt.v|
+!i113 1
+R7
+R8
+R9
+valtera_avalon_i2c_condt_det
+R1
+!i10b 1
+!s100 NWHS0:R1WP@@17W[f`AJI0
+IdZazLO2]5h?O>a8D6@Mbo2
+R2
+R0
+R3
+8D:/year4/fyp/ADC/DE10_NANO_QSYS/synthesis/submodules/altera_avalon_i2c_condt_det.v
+FD:/year4/fyp/ADC/DE10_NANO_QSYS/synthesis/submodules/altera_avalon_i2c_condt_det.v
+R4
+R5
+r1
+!s85 0
+31
+R6
+!s107 D:/year4/fyp/ADC/DE10_NANO_QSYS/synthesis/submodules/altera_avalon_i2c_condt_det.v|
+!s90 -reportprogress|300|-vlog01compat|-work|DE10_NANO_QSYS|+incdir+D:/year4/fyp/ADC/DE10_NANO_QSYS/synthesis/submodules|D:/year4/fyp/ADC/DE10_NANO_QSYS/synthesis/submodules/altera_avalon_i2c_condt_det.v|
+!i113 1
+R7
+R8
+R9
+valtera_avalon_i2c_condt_gen
+R1
+!i10b 1
+!s100 F?IU54?<EV_ITzfFeG@`Z2
+IQjNNb@CJmP0`IHVgR5Zmg2
+R2
+R0
+R3
+8D:/year4/fyp/ADC/DE10_NANO_QSYS/synthesis/submodules/altera_avalon_i2c_condt_gen.v
+FD:/year4/fyp/ADC/DE10_NANO_QSYS/synthesis/submodules/altera_avalon_i2c_condt_gen.v
+R4
+R5
+r1
+!s85 0
+31
+R6
+!s107 D:/year4/fyp/ADC/DE10_NANO_QSYS/synthesis/submodules/altera_avalon_i2c_condt_gen.v|
+!s90 -reportprogress|300|-vlog01compat|-work|DE10_NANO_QSYS|+incdir+D:/year4/fyp/ADC/DE10_NANO_QSYS/synthesis/submodules|D:/year4/fyp/ADC/DE10_NANO_QSYS/synthesis/submodules/altera_avalon_i2c_condt_gen.v|
+!i113 1
+R7
+R8
+R9
+valtera_avalon_i2c_csr
+R1
+!i10b 1
+!s100 _=XDE5_WWD1FP8Djl72V@1
+I]<;kCD=KB]b@E;?ml?Wnf1
+R2
+R0
+R3
+8D:/year4/fyp/ADC/DE10_NANO_QSYS/synthesis/submodules/altera_avalon_i2c_csr.v
+FD:/year4/fyp/ADC/DE10_NANO_QSYS/synthesis/submodules/altera_avalon_i2c_csr.v
+R4
+R5
+r1
+!s85 0
+31
+R6
+!s107 D:/year4/fyp/ADC/DE10_NANO_QSYS/synthesis/submodules/altera_avalon_i2c_csr.v|
+!s90 -reportprogress|300|-vlog01compat|-work|DE10_NANO_QSYS|+incdir+D:/year4/fyp/ADC/DE10_NANO_QSYS/synthesis/submodules|D:/year4/fyp/ADC/DE10_NANO_QSYS/synthesis/submodules/altera_avalon_i2c_csr.v|
+!i113 1
+R7
+R8
+R9
+valtera_avalon_i2c_fifo
+R1
+!i10b 1
+!s100 K6:GE0kJz4H;LzVG[N3Ao2
+IV]67=R;@:g`an6hN0nWlO2
+R2
+R0
+R3
+8D:/year4/fyp/ADC/DE10_NANO_QSYS/synthesis/submodules/altera_avalon_i2c_fifo.v
+FD:/year4/fyp/ADC/DE10_NANO_QSYS/synthesis/submodules/altera_avalon_i2c_fifo.v
+R4
+R5
+r1
+!s85 0
+31
+R6
+!s107 D:/year4/fyp/ADC/DE10_NANO_QSYS/synthesis/submodules/altera_avalon_i2c_fifo.v|
+!s90 -reportprogress|300|-vlog01compat|-work|DE10_NANO_QSYS|+incdir+D:/year4/fyp/ADC/DE10_NANO_QSYS/synthesis/submodules|D:/year4/fyp/ADC/DE10_NANO_QSYS/synthesis/submodules/altera_avalon_i2c_fifo.v|
+!i113 1
+R7
+R8
+R9
+valtera_avalon_i2c_mstfsm
+Z10 !s110 1749584536
+!i10b 1
+!s100 EoIZ@gjk[7@:RNMP??jE51
+INaGlPa[WFRNEYF^ZCUX643
+R2
+R0
+R3
+8D:/year4/fyp/ADC/DE10_NANO_QSYS/synthesis/submodules/altera_avalon_i2c_mstfsm.v
+FD:/year4/fyp/ADC/DE10_NANO_QSYS/synthesis/submodules/altera_avalon_i2c_mstfsm.v
+R4
+R5
+r1
+!s85 0
+31
+Z11 !s108 1749584536.000000
+!s107 D:/year4/fyp/ADC/DE10_NANO_QSYS/synthesis/submodules/altera_avalon_i2c_mstfsm.v|
+!s90 -reportprogress|300|-vlog01compat|-work|DE10_NANO_QSYS|+incdir+D:/year4/fyp/ADC/DE10_NANO_QSYS/synthesis/submodules|D:/year4/fyp/ADC/DE10_NANO_QSYS/synthesis/submodules/altera_avalon_i2c_mstfsm.v|
+!i113 1
+R7
+R8
+R9
+valtera_avalon_i2c_rxshifter
+R10
+!i10b 1
+!s100 NH?j7@d_^5gIg43`l^N`W3
+Inn_eHi^8FXIbbKW=<9CQ_3
+R2
+R0
+R3
+8D:/year4/fyp/ADC/DE10_NANO_QSYS/synthesis/submodules/altera_avalon_i2c_rxshifter.v
+FD:/year4/fyp/ADC/DE10_NANO_QSYS/synthesis/submodules/altera_avalon_i2c_rxshifter.v
+R4
+R5
+r1
+!s85 0
+31
+R11
+!s107 D:/year4/fyp/ADC/DE10_NANO_QSYS/synthesis/submodules/altera_avalon_i2c_rxshifter.v|
+!s90 -reportprogress|300|-vlog01compat|-work|DE10_NANO_QSYS|+incdir+D:/year4/fyp/ADC/DE10_NANO_QSYS/synthesis/submodules|D:/year4/fyp/ADC/DE10_NANO_QSYS/synthesis/submodules/altera_avalon_i2c_rxshifter.v|
+!i113 1
+R7
+R8
+R9
+valtera_avalon_i2c_spksupp
+R10
+!i10b 1
+!s100 L4Jc3zDI^<U>:e]oA=kFJ0
+I76SYTE`^LPPaInVGfC9SH2
+R2
+R0
+R3
+8D:/year4/fyp/ADC/DE10_NANO_QSYS/synthesis/submodules/altera_avalon_i2c_spksupp.v
+FD:/year4/fyp/ADC/DE10_NANO_QSYS/synthesis/submodules/altera_avalon_i2c_spksupp.v
+R4
+R5
+r1
+!s85 0
+31
+R11
+!s107 D:/year4/fyp/ADC/DE10_NANO_QSYS/synthesis/submodules/altera_avalon_i2c_spksupp.v|
+!s90 -reportprogress|300|-vlog01compat|-work|DE10_NANO_QSYS|+incdir+D:/year4/fyp/ADC/DE10_NANO_QSYS/synthesis/submodules|D:/year4/fyp/ADC/DE10_NANO_QSYS/synthesis/submodules/altera_avalon_i2c_spksupp.v|
+!i113 1
+R7
+R8
+R9
+valtera_avalon_i2c_txout
+R10
+!i10b 1
+!s100 :0U7=ZbJ=6_9QSWgb9VmM1
+I1LcKFCQT<`V3z_1g>gIhT2
+R2
+R0
+R3
+8D:/year4/fyp/ADC/DE10_NANO_QSYS/synthesis/submodules/altera_avalon_i2c_txout.v
+FD:/year4/fyp/ADC/DE10_NANO_QSYS/synthesis/submodules/altera_avalon_i2c_txout.v
+R4
+R5
+r1
+!s85 0
+31
+R11
+!s107 D:/year4/fyp/ADC/DE10_NANO_QSYS/synthesis/submodules/altera_avalon_i2c_txout.v|
+!s90 -reportprogress|300|-vlog01compat|-work|DE10_NANO_QSYS|+incdir+D:/year4/fyp/ADC/DE10_NANO_QSYS/synthesis/submodules|D:/year4/fyp/ADC/DE10_NANO_QSYS/synthesis/submodules/altera_avalon_i2c_txout.v|
+!i113 1
+R7
+R8
+R9
+valtera_avalon_i2c_txshifter
+R10
+!i10b 1
+!s100 ceW5>`_l>2G>TjfE>=9`60
+Il0lQHl08[<CIK?EWojVO=0
+R2
+R0
+R3
+8D:/year4/fyp/ADC/DE10_NANO_QSYS/synthesis/submodules/altera_avalon_i2c_txshifter.v
+FD:/year4/fyp/ADC/DE10_NANO_QSYS/synthesis/submodules/altera_avalon_i2c_txshifter.v
+R4
+R5
+r1
+!s85 0
+31
+R11
+!s107 D:/year4/fyp/ADC/DE10_NANO_QSYS/synthesis/submodules/altera_avalon_i2c_txshifter.v|
+!s90 -reportprogress|300|-vlog01compat|-work|DE10_NANO_QSYS|+incdir+D:/year4/fyp/ADC/DE10_NANO_QSYS/synthesis/submodules|D:/year4/fyp/ADC/DE10_NANO_QSYS/synthesis/submodules/altera_avalon_i2c_txshifter.v|
+!i113 1
+R7
+R8
+R9
+valtera_customins_master_translator
+Z12 !s110 1749584530
+!i10b 1
+!s100 iAjRYXBhGZ_FfnYD?k0U83
+IMKSih?GebWX7iR@z29<mQ0
+R2
+R0
+Z13 w1749582321
+8D:/year4/fyp/ADC/DE10_NANO_QSYS/synthesis/submodules/altera_customins_master_translator.v
+FD:/year4/fyp/ADC/DE10_NANO_QSYS/synthesis/submodules/altera_customins_master_translator.v
+L0 23
+R5
+r1
+!s85 0
+31
+Z14 !s108 1749584530.000000
+!s107 D:/year4/fyp/ADC/DE10_NANO_QSYS/synthesis/submodules/altera_customins_master_translator.v|
+!s90 -reportprogress|300|-vlog01compat|-work|DE10_NANO_QSYS|+incdir+D:/year4/fyp/ADC/DE10_NANO_QSYS/synthesis/submodules|D:/year4/fyp/ADC/DE10_NANO_QSYS/synthesis/submodules/altera_customins_master_translator.v|
+!i113 1
+R7
+R8
+R9
+valtera_reset_controller
+Z15 !s110 1749584529
+!i10b 1
+!s100 z[H_hRO9gO=:^2E3_jWH03
+Ia6ni9mLUa2FKjZ:z]1HWL2
+R2
+R0
+Z16 w1749582330
+8D:/year4/fyp/ADC/DE10_NANO_QSYS/synthesis/submodules/altera_reset_controller.v
+FD:/year4/fyp/ADC/DE10_NANO_QSYS/synthesis/submodules/altera_reset_controller.v
+L0 42
+R5
+r1
+!s85 0
+31
+Z17 !s108 1749584529.000000
+!s107 D:/year4/fyp/ADC/DE10_NANO_QSYS/synthesis/submodules/altera_reset_controller.v|
+!s90 -reportprogress|300|-vlog01compat|-work|DE10_NANO_QSYS|+incdir+D:/year4/fyp/ADC/DE10_NANO_QSYS/synthesis/submodules|D:/year4/fyp/ADC/DE10_NANO_QSYS/synthesis/submodules/altera_reset_controller.v|
+!i113 1
+R7
+R8
+R9
+valtera_reset_synchronizer
+R12
+!i10b 1
+!s100 oWLYmSO[EOX[G0PgQhZ2=0
+IAg7;L;dj=J@kfcHiD7UhY0
+R2
+R0
+R16
+8D:/year4/fyp/ADC/DE10_NANO_QSYS/synthesis/submodules/altera_reset_synchronizer.v
+FD:/year4/fyp/ADC/DE10_NANO_QSYS/synthesis/submodules/altera_reset_synchronizer.v
+L0 24
+R5
+r1
+!s85 0
+31
+R14
+!s107 D:/year4/fyp/ADC/DE10_NANO_QSYS/synthesis/submodules/altera_reset_synchronizer.v|
+!s90 -reportprogress|300|-vlog01compat|-work|DE10_NANO_QSYS|+incdir+D:/year4/fyp/ADC/DE10_NANO_QSYS/synthesis/submodules|D:/year4/fyp/ADC/DE10_NANO_QSYS/synthesis/submodules/altera_reset_synchronizer.v|
+!i113 1
+R7
+R8
+R9
+vanti_diff_div
+Z18 !s110 1749584531
+!i10b 1
+!s100 fGblE`DT72[7TRVL`5fb`2
+Ia:`7I@ZoMWM3nUa<U4hUS1
+R2
+R0
+R13
+8D:/year4/fyp/ADC/DE10_NANO_QSYS/synthesis/submodules/anti_diff_div.v
+FD:/year4/fyp/ADC/DE10_NANO_QSYS/synthesis/submodules/anti_diff_div.v
+Z19 L0 39
+R5
+r1
+!s85 0
+31
+Z20 !s108 1749584531.000000
+!s107 D:/year4/fyp/ADC/DE10_NANO_QSYS/synthesis/submodules/anti_diff_div.v|
+!s90 -reportprogress|300|-vlog01compat|-work|DE10_NANO_QSYS|+incdir+D:/year4/fyp/ADC/DE10_NANO_QSYS/synthesis/submodules|D:/year4/fyp/ADC/DE10_NANO_QSYS/synthesis/submodules/anti_diff_div.v|
+!i113 1
+R7
+R8
+R9
+vavg_div
+R18
+!i10b 1
+!s100 <`8g9GX45T?WS=FFz?fkd1
+I0jcQ?GUhBmj`5To`zH<L:3
+R2
+R0
+R13
+8D:/year4/fyp/ADC/DE10_NANO_QSYS/synthesis/submodules/avg_div.v
+FD:/year4/fyp/ADC/DE10_NANO_QSYS/synthesis/submodules/avg_div.v
+R19
+R5
+r1
+!s85 0
+31
+R20
+!s107 D:/year4/fyp/ADC/DE10_NANO_QSYS/synthesis/submodules/avg_div.v|
+!s90 -reportprogress|300|-vlog01compat|-work|DE10_NANO_QSYS|+incdir+D:/year4/fyp/ADC/DE10_NANO_QSYS/synthesis/submodules|D:/year4/fyp/ADC/DE10_NANO_QSYS/synthesis/submodules/avg_div.v|
+!i113 1
+R7
+R8
+R9
+vDE10_NANO_QSYS
+R15
+!i10b 1
+!s100 7R_HO7>XPQjF3mA<43LJl3
+I_ge^AdJYM[YITU]6]f5n^0
+R2
+R0
+R3
+8D:/year4/fyp/ADC/DE10_NANO_QSYS/synthesis/DE10_NANO_QSYS.v
+FD:/year4/fyp/ADC/DE10_NANO_QSYS/synthesis/DE10_NANO_QSYS.v
+L0 6
+R5
+r1
+!s85 0
+31
+R17
+!s107 D:/year4/fyp/ADC/DE10_NANO_QSYS/synthesis/DE10_NANO_QSYS.v|
+!s90 -reportprogress|300|-vlog01compat|-work|DE10_NANO_QSYS|+incdir+D:/year4/fyp/ADC/DE10_NANO_QSYS/synthesis|D:/year4/fyp/ADC/DE10_NANO_QSYS/synthesis/DE10_NANO_QSYS.v|
+!i113 1
+R7
+!s92 -vlog01compat -work DE10_NANO_QSYS +incdir+D:/year4/fyp/ADC/DE10_NANO_QSYS/synthesis
+R9
+n@d@e10_@n@a@n@o_@q@s@y@s
+vDE10_NANO_QSYS_jtag_uart
+Z21 !s110 1749584532
+!i10b 1
+!s100 z:QO2zeISaJIU1XoYAFT;2
+IMSX9_?R2]4l^Cc0g6A?`h0
+R2
+R0
+Z22 w1749582320
+Z23 8D:/year4/fyp/ADC/DE10_NANO_QSYS/synthesis/submodules/DE10_NANO_QSYS_jtag_uart.v
+Z24 FD:/year4/fyp/ADC/DE10_NANO_QSYS/synthesis/submodules/DE10_NANO_QSYS_jtag_uart.v
+L0 331
+R5
+r1
+!s85 0
+31
+Z25 !s108 1749584532.000000
+Z26 !s107 D:/year4/fyp/ADC/DE10_NANO_QSYS/synthesis/submodules/DE10_NANO_QSYS_jtag_uart.v|
+Z27 !s90 -reportprogress|300|-vlog01compat|-work|DE10_NANO_QSYS|+incdir+D:/year4/fyp/ADC/DE10_NANO_QSYS/synthesis/submodules|D:/year4/fyp/ADC/DE10_NANO_QSYS/synthesis/submodules/DE10_NANO_QSYS_jtag_uart.v|
+!i113 1
+R7
+R8
+R9
+n@d@e10_@n@a@n@o_@q@s@y@s_jtag_uart
+vDE10_NANO_QSYS_jtag_uart_scfifo_r
+R21
+!i10b 1
+!s100 FNTOf`bnNm>zbZJ5j9bmd2
+IC17Mg<mL1kT:V5M>gW^742
+R2
+R0
+R22
+R23
+R24
+L0 243
+R5
+r1
+!s85 0
+31
+R25
+R26
+R27
+!i113 1
+R7
+R8
+R9
+n@d@e10_@n@a@n@o_@q@s@y@s_jtag_uart_scfifo_r
+vDE10_NANO_QSYS_jtag_uart_scfifo_w
+R21
+!i10b 1
+!s100 zN7E_?P`aIkkBTA4V4@]C0
+IEh`bW<A;K;;B5kHHY2EFm1
+R2
+R0
+R22
+R23
+R24
+L0 78
+R5
+r1
+!s85 0
+31
+R25
+R26
+R27
+!i113 1
+R7
+R8
+R9
+n@d@e10_@n@a@n@o_@q@s@y@s_jtag_uart_scfifo_w
+vDE10_NANO_QSYS_jtag_uart_sim_scfifo_r
+R21
+!i10b 1
+!s100 WDc1B6C<ez@0;Gb1]P>eo3
+IVjSUMg;kGgGe7GO3m6XiU1
+R2
+R0
+R22
+R23
+R24
+L0 164
+R5
+r1
+!s85 0
+31
+R25
+R26
+R27
+!i113 1
+R7
+R8
+R9
+n@d@e10_@n@a@n@o_@q@s@y@s_jtag_uart_sim_scfifo_r
+vDE10_NANO_QSYS_jtag_uart_sim_scfifo_w
+R21
+!i10b 1
+!s100 12Ya>SB]Ina@K^JeFF^C11
+IYXW2GCPJ?_^ZzhKT1cz0h2
+R2
+R0
+R22
+R23
+R24
+Z28 L0 21
+R5
+r1
+!s85 0
+31
+R25
+R26
+R27
+!i113 1
+R7
+R8
+R9
+n@d@e10_@n@a@n@o_@q@s@y@s_jtag_uart_sim_scfifo_w
+vDE10_NANO_QSYS_mm_interconnect_0
+R12
+!i10b 1
+!s100 SMZ`Tk=5VWnWgc01ER3`f0
+IEE<;<Rlk8J1_@W@XK[]LH1
+R2
+R0
+R16
+8D:/year4/fyp/ADC/DE10_NANO_QSYS/synthesis/submodules/DE10_NANO_QSYS_mm_interconnect_0.v
+FD:/year4/fyp/ADC/DE10_NANO_QSYS/synthesis/submodules/DE10_NANO_QSYS_mm_interconnect_0.v
+L0 9
+R5
+r1
+!s85 0
+31
+R14
+!s107 D:/year4/fyp/ADC/DE10_NANO_QSYS/synthesis/submodules/DE10_NANO_QSYS_mm_interconnect_0.v|
+!s90 -reportprogress|300|-vlog01compat|-work|DE10_NANO_QSYS|+incdir+D:/year4/fyp/ADC/DE10_NANO_QSYS/synthesis/submodules|D:/year4/fyp/ADC/DE10_NANO_QSYS/synthesis/submodules/DE10_NANO_QSYS_mm_interconnect_0.v|
+!i113 1
+R7
+R8
+R9
+n@d@e10_@n@a@n@o_@q@s@y@s_mm_interconnect_0
+vDE10_NANO_QSYS_mm_interconnect_0_avalon_st_adapter
+R12
+!i10b 1
+!s100 n1C`YT_>jLijA6X;IaZ1P0
+Ilg7Hd^d;D<C[]_Be52Ka?0
+R2
+R0
+w1749582336
+8D:/year4/fyp/ADC/DE10_NANO_QSYS/synthesis/submodules/DE10_NANO_QSYS_mm_interconnect_0_avalon_st_adapter.v
+FD:/year4/fyp/ADC/DE10_NANO_QSYS/synthesis/submodules/DE10_NANO_QSYS_mm_interconnect_0_avalon_st_adapter.v
+L0 9
+R5
+r1
+!s85 0
+31
+R14
+!s107 D:/year4/fyp/ADC/DE10_NANO_QSYS/synthesis/submodules/DE10_NANO_QSYS_mm_interconnect_0_avalon_st_adapter.v|
+!s90 -reportprogress|300|-vlog01compat|-work|DE10_NANO_QSYS|+incdir+D:/year4/fyp/ADC/DE10_NANO_QSYS/synthesis/submodules|D:/year4/fyp/ADC/DE10_NANO_QSYS/synthesis/submodules/DE10_NANO_QSYS_mm_interconnect_0_avalon_st_adapter.v|
+!i113 1
+R7
+R8
+R9
+n@d@e10_@n@a@n@o_@q@s@y@s_mm_interconnect_0_avalon_st_adapter
+vDE10_NANO_QSYS_nios2_qsys
+R21
+!i10b 1
+!s100 J2OAa2l;3T5l]bZZ^30OF0
+IQRmYRlAR?=USB46:JUhdX2
+R2
+R0
+R22
+8D:/year4/fyp/ADC/DE10_NANO_QSYS/synthesis/submodules/DE10_NANO_QSYS_nios2_qsys.v
+FD:/year4/fyp/ADC/DE10_NANO_QSYS/synthesis/submodules/DE10_NANO_QSYS_nios2_qsys.v
+L0 9
+R5
+r1
+!s85 0
+31
+R25
+!s107 D:/year4/fyp/ADC/DE10_NANO_QSYS/synthesis/submodules/DE10_NANO_QSYS_nios2_qsys.v|
+!s90 -reportprogress|300|-vlog01compat|-work|DE10_NANO_QSYS|+incdir+D:/year4/fyp/ADC/DE10_NANO_QSYS/synthesis/submodules|D:/year4/fyp/ADC/DE10_NANO_QSYS/synthesis/submodules/DE10_NANO_QSYS_nios2_qsys.v|
+!i113 1
+R7
+R8
+R9
+n@d@e10_@n@a@n@o_@q@s@y@s_nios2_qsys
+vDE10_NANO_QSYS_onchip_memory2
+R21
+!i10b 1
+!s100 3[7d[LDO[e?:[91EhC[nX0
+IG`]XE9fb38NCjkC5[TUYG3
+R2
+R0
+R13
+8D:/year4/fyp/ADC/DE10_NANO_QSYS/synthesis/submodules/DE10_NANO_QSYS_onchip_memory2.v
+FD:/year4/fyp/ADC/DE10_NANO_QSYS/synthesis/submodules/DE10_NANO_QSYS_onchip_memory2.v
+R28
+R5
+r1
+!s85 0
+31
+R25
+!s107 D:/year4/fyp/ADC/DE10_NANO_QSYS/synthesis/submodules/DE10_NANO_QSYS_onchip_memory2.v|
+!s90 -reportprogress|300|-vlog01compat|-work|DE10_NANO_QSYS|+incdir+D:/year4/fyp/ADC/DE10_NANO_QSYS/synthesis/submodules|D:/year4/fyp/ADC/DE10_NANO_QSYS/synthesis/submodules/DE10_NANO_QSYS_onchip_memory2.v|
+!i113 1
+R7
+R8
+R9
+n@d@e10_@n@a@n@o_@q@s@y@s_onchip_memory2
+vDE10_NANO_QSYS_pll_sys
+R18
+!i10b 1
+!s100 MLY9eiiJA3[=BGZHj7S?Y2
+ImH3a[ig37QQ]`lLj=FFnD0
+R2
+R0
+R13
+8D:/year4/fyp/ADC/DE10_NANO_QSYS/synthesis/submodules/DE10_NANO_QSYS_pll_sys.v
+FD:/year4/fyp/ADC/DE10_NANO_QSYS/synthesis/submodules/DE10_NANO_QSYS_pll_sys.v
+L0 2
+R5
+r1
+!s85 0
+31
+R20
+!s107 D:/year4/fyp/ADC/DE10_NANO_QSYS/synthesis/submodules/DE10_NANO_QSYS_pll_sys.v|
+!s90 -reportprogress|300|-vlog01compat|-work|DE10_NANO_QSYS|+incdir+D:/year4/fyp/ADC/DE10_NANO_QSYS/synthesis/submodules|D:/year4/fyp/ADC/DE10_NANO_QSYS/synthesis/submodules/DE10_NANO_QSYS_pll_sys.v|
+!i113 1
+R7
+R8
+R9
+n@d@e10_@n@a@n@o_@q@s@y@s_pll_sys
+vDE10_NANO_QSYS_sw
+R18
+!i10b 1
+!s100 M[7fLg0PcA]nQIGJF=c`]3
+IXSA9[59Bnk9QI>cTo]OIO1
+R2
+R0
+R13
+8D:/year4/fyp/ADC/DE10_NANO_QSYS/synthesis/submodules/DE10_NANO_QSYS_sw.v
+FD:/year4/fyp/ADC/DE10_NANO_QSYS/synthesis/submodules/DE10_NANO_QSYS_sw.v
+R28
+R5
+r1
+!s85 0
+31
+R20
+!s107 D:/year4/fyp/ADC/DE10_NANO_QSYS/synthesis/submodules/DE10_NANO_QSYS_sw.v|
+!s90 -reportprogress|300|-vlog01compat|-work|DE10_NANO_QSYS|+incdir+D:/year4/fyp/ADC/DE10_NANO_QSYS/synthesis/submodules|D:/year4/fyp/ADC/DE10_NANO_QSYS/synthesis/submodules/DE10_NANO_QSYS_sw.v|
+!i113 1
+R7
+R8
+R9
+n@d@e10_@n@a@n@o_@q@s@y@s_sw
+vDE10_NANO_QSYS_sysid_qsys
+R18
+!i10b 1
+!s100 c0j8J8;jAY0l<;G`B2eVQ2
+I7fY2<WXI[Y8[Pa8]F6FV53
+R2
+R0
+R13
+8D:/year4/fyp/ADC/DE10_NANO_QSYS/synthesis/submodules/DE10_NANO_QSYS_sysid_qsys.v
+FD:/year4/fyp/ADC/DE10_NANO_QSYS/synthesis/submodules/DE10_NANO_QSYS_sysid_qsys.v
+L0 34
+R5
+r1
+!s85 0
+31
+R14
+!s107 D:/year4/fyp/ADC/DE10_NANO_QSYS/synthesis/submodules/DE10_NANO_QSYS_sysid_qsys.v|
+!s90 -reportprogress|300|-vlog01compat|-work|DE10_NANO_QSYS|+incdir+D:/year4/fyp/ADC/DE10_NANO_QSYS/synthesis/submodules|D:/year4/fyp/ADC/DE10_NANO_QSYS/synthesis/submodules/DE10_NANO_QSYS_sysid_qsys.v|
+!i113 1
+R7
+R8
+R9
+n@d@e10_@n@a@n@o_@q@s@y@s_sysid_qsys
+vDE10_NANO_QSYS_timer_0
+R12
+!i10b 1
+!s100 B29D6?03l_=PiMh=PI>LC1
+IN3<nO6Fz[1d?>>h;ig9YK2
+R2
+R0
+R13
+8D:/year4/fyp/ADC/DE10_NANO_QSYS/synthesis/submodules/DE10_NANO_QSYS_timer_0.v
+FD:/year4/fyp/ADC/DE10_NANO_QSYS/synthesis/submodules/DE10_NANO_QSYS_timer_0.v
+R28
+R5
+r1
+!s85 0
+31
+R14
+!s107 D:/year4/fyp/ADC/DE10_NANO_QSYS/synthesis/submodules/DE10_NANO_QSYS_timer_0.v|
+!s90 -reportprogress|300|-vlog01compat|-work|DE10_NANO_QSYS|+incdir+D:/year4/fyp/ADC/DE10_NANO_QSYS/synthesis/submodules|D:/year4/fyp/ADC/DE10_NANO_QSYS/synthesis/submodules/DE10_NANO_QSYS_timer_0.v|
+!i113 1
+R7
+R8
+R9
+n@d@e10_@n@a@n@o_@q@s@y@s_timer_0
+vmod_divide
+R18
+!i10b 1
+!s100 DmFEdkIekX<`bO3b7KnAR1
+I6]43oN2i2_dznXeg8hlle3
+R2
+R0
+R13
+8D:/year4/fyp/ADC/DE10_NANO_QSYS/synthesis/submodules/mod_divide.v
+FD:/year4/fyp/ADC/DE10_NANO_QSYS/synthesis/submodules/mod_divide.v
+R19
+R5
+r1
+!s85 0
+31
+R20
+!s107 D:/year4/fyp/ADC/DE10_NANO_QSYS/synthesis/submodules/mod_divide.v|
+!s90 -reportprogress|300|-vlog01compat|-work|DE10_NANO_QSYS|+incdir+D:/year4/fyp/ADC/DE10_NANO_QSYS/synthesis/submodules|D:/year4/fyp/ADC/DE10_NANO_QSYS/synthesis/submodules/mod_divide.v|
+!i113 1
+R7
+R8
+R9

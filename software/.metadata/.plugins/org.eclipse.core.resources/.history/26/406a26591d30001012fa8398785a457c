@@ -1,0 +1,249 @@
+#include <stdio.h>
+#include <io.h>
+#include <unistd.h>
+#include <stdint.h>
+
+//#include "sys/alt_timestamp.h"
+
+//#include <stdlib.h>
+//#include <sys/alt_stdio.h>
+//#include <sys/alt_alarm.h>
+//#include <sys/times.h>
+//#include <alt_types.h>
+#include <system.h>
+
+
+#include <math.h>
+//#include <time.h>
+
+
+#define ALT_CI_RECONSTRUCTION_TOP_0(A) __builtin_custom_ini(ALT_CI_RECONSTRUCTION_TOP_0_N,(A))
+#define ALT_CI_RECONSTRUCTION_TOP_0_N 0x1
+
+
+
+typedef struct {
+    float lam;
+    float prev_y;
+    float prev_eps;
+    int initialized;
+} UnlimitedSamplerReconstructor;
+
+/* Initialize the reconstructor */
+void initReconstructor(UnlimitedSamplerReconstructor *recon, float lam) {
+    recon->lam = lam;
+    recon->prev_y = 0.0;
+    recon->prev_eps = 0.0;
+    recon->initialized = 0;
+}
+
+/* Centered modulo function into [-¦Ë, ¦Ë) */
+float modulo(float x, float lam) {
+    float two_lam = 2.0 * lam;
+    float mod = fmod(x + lam, two_lam);
+    if (mod < 0) mod += two_lam;
+    return mod - lam;
+}
+
+/* Update function: process one sample */
+float update(UnlimitedSamplerReconstructor *recon, float yk) {
+    if (!recon->initialized) {
+        recon->prev_y = yk;
+        recon->initialized = 1;
+        return yk;  // First sample, return as is
+    }
+
+    // Step 1: Compute ¦¤y[k]
+    float dy = yk - recon->prev_y;
+
+    // Step 2: Apply modulo to ¦¤y[k]
+    float mod_dy = modulo(dy, recon->lam);
+
+    // Step 3: Compute ¦¤¦Å[k]
+    float delta_eps = mod_dy - dy;
+
+    // Step 4: Update ¦Å[k], round to nearest 2¦Ë
+    recon->prev_eps += delta_eps;
+    float eps_k = 2.0 * recon->lam * round(recon->prev_eps / (2.0 * recon->lam));
+
+    // Step 5: Recover g[k]
+    float gk = yk + eps_k;
+
+    // Update state
+    recon->prev_y = yk;
+
+    return gk;
+}
+
+
+#define MA_WINDOW_SIZE 100  // Size of the moving average window
+
+typedef struct {
+    float buffer[MA_WINDOW_SIZE];
+    int index;
+    int count;
+    float sum;
+} MovingAverage;
+
+/* Initialize the moving average filter */
+void initMovingAverage(MovingAverage *ma) {
+    ma->index = 0;
+    ma->count = 0;
+    ma->sum = 0.0;
+
+    for (int i = 0; i < MA_WINDOW_SIZE; i++) {
+        ma->buffer[i] = 0.0;
+    }
+}
+
+/* Update the moving average with a new sample */
+float updateMovingAverage(MovingAverage *ma, float new_sample) {
+    // Remove the oldest sample from the sum
+    ma->sum -= ma->buffer[ma->index];
+
+    // Add the new sample to the buffer and sum
+    ma->buffer[ma->index] = new_sample;
+    ma->sum += new_sample;
+
+    // Update the index (circular buffer)
+    ma->index = (ma->index + 1) % MA_WINDOW_SIZE;
+
+    // Update the count (if less than window size)
+    if (ma->count < MA_WINDOW_SIZE) {
+        ma->count++;
+    }
+
+    // Compute the moving average
+    return ma->sum / ma->count;
+}
+
+
+
+uint8_t float_to_dac(float signal_value, int DAC_MAX_VALUE, float V_REF, float OFFSET) {
+    float dac_voltage;
+    uint8_t dac_value;
+
+    // Apply offset
+    dac_voltage = signal_value + OFFSET;
+
+    // Clamp to DAC range (0V to 5V)
+    if (dac_voltage < 0.0f) {
+        dac_voltage = 0.0f;
+    } else if (dac_voltage > V_REF) {
+        dac_voltage = V_REF;
+    }
+
+    // Convert to DAC value
+    dac_value = (uint8_t)((dac_voltage / V_REF) * DAC_MAX_VALUE);
+
+    return dac_value;
+}
+
+float convert_adc_to_signal(int adc_value, int ADC_MAX_VALUE, float V_REF, float OFFSET_VOLTAGE) {
+    // Calculate the input voltage
+    float input_voltage = (adc_value / (float)ADC_MAX_VALUE) * V_REF;
+
+    // Subtract the offset to get the original signal value
+    float signal_value = input_voltage - OFFSET_VOLTAGE;
+
+    return signal_value;
+}
+
+
+
+
+int top(int adc_value,UnlimitedSamplerReconstructor *recon, MovingAverage *ma ){
+
+	float signal_in=convert_adc_to_signal(adc_value,4095,4.096,0);
+	float reconstructed_val=update(recon, signal_in);
+	float avg = updateMovingAverage(ma, reconstructed_val);
+	int dac_out=float_to_dac(reconstructed_val-avg,255,5,2);
+	return dac_out;
+}
+
+
+#define dataset_size 100000
+#define num_times_ran 10
+void generate_test_data(int data[dataset_size/num_times_ran] , int min, int max) {
+    for (int i = 0; i < dataset_size/num_times_ran; i++) {
+        data[i] = i%max;
+    }
+}
+
+
+
+
+
+int main() {
+	float lam=0.75;
+    UnlimitedSamplerReconstructor recon;
+    initReconstructor(&recon, lam);
+    clock_t start_time, end_time;
+//    unsigned int time_spent;
+//    if (alt_timestamp_start() < 0) {
+//        printf("Timestamp not available\n");
+//    }
+    printf("running \n");
+    MovingAverage ma;
+    initMovingAverage(&ma);
+    // Example float32 data (converted from your file)
+//	float data[] = {0.0f, 0.0f,1.0f,0.0f,1.0f, 1.0f,  0.0f,0.0f, 0.0f,0.0f,0.0f,0.0f, 0.0f,  0.0f};
+//    float data[] = {0.0f, 0.0f,1.75f,0.0f,1.75f, 1.75f,  1.75f,0.0f, 0.0f,0.0f,0.0f,0.0f, 0.0f,  0.0f};  // <- Replace with your actual values
+//    float data[] = {-0.0175935030f, -0.0175935030ff,-0.0175935030f,-0.0175935030f,-0.0175935030f, 0.0f};  // <- Replace with your actual values
+//	int =10000;
+	int datatest[dataset_size/num_times_ran];
+	generate_test_data(datatest,1,4000);
+	printf("data test set generation done \n");
+//	int longtest[]={};
+
+
+
+
+//    int data_len = sizeof(data) / sizeof(data[0]);
+//    int data_len = sizeof(datatest);
+//    float sum=0;
+    // Print the array contents
+
+    start_time = times(NULL);
+    for (int j = 0; j < num_times_ran; j++) {
+		for (int i = 0; i < dataset_size; i++) {
+	//        printf("data[%d] = %f\n", i, data[i]);
+			ALT_CI_RECONSTRUCTION_TOP_0(datatest[i]);
+	//    	ALT_CI_RECONSTRUCTION_TOP_0(1000);
+	//    	printf("\n");
+	//
+	//        printf("data out [%d] = %i\n ", i, ALT_CI_RECONSTRUCTION_TOP_0(data_in));
+	//        printf("reconstructed_val [%d] = %i\n ", i, top(data_in,&recon,&ma));
+	//        float reconstructed_val=update(&recon, data[i]);
+	//        printf("reconstructed_val [%d] = %f\n ", i, reconstructed_val);
+	//        float avg = updateMovingAverage(&ma, reconstructed_val);
+	//        printf("reference avg out [%d] = %f\n ", i, avg);
+	//        printf("reference data out [%d] = %f\n ", i, reconstructed_val-avg);
+
+		}
+    }
+    end_time = times(NULL);
+    printf(" hardware_ip processing time = %d ms \n", (unsigned int) (end_time-start_time));
+//    time_spent = (unsigned int)(end_time - start_time);
+//    printf("hardware_ip processing time: %d ticks\n", time_spent);
+
+    start_time = times(NULL);
+    for (int j = 0; j < num_times_ran; j++) {
+		for (int i = 0; i < dataset_size; i++) {
+			top(datatest[i],&recon,&ma);
+	//    	top(1000,&recon,&ma);
+	//        float reconstructed_val=update(&recon, data[i]);
+	//        printf("reconstructed_val [%d] = %f\n ", i, reconstructed_val);
+	//        float avg = updateMovingAverage(&ma, reconstructed_val);
+	//        printf("reference avg out [%d] = %f\n ", i, avg);
+	//        printf("reference data out [%d] = %f\n ", i, reconstructed_val-avg);
+
+		}
+    }
+    end_time = times(NULL);
+//    time_spent = (unsigned int)(end_time - start_time);
+
+    printf(" C processing time = %d ms \n", (unsigned int) (end_time-start_time));
+
+    return 0;
+}

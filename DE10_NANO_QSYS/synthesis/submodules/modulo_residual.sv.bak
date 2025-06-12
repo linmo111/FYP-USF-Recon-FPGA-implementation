@@ -1,0 +1,86 @@
+module modulo_residual #(
+    parameter WIDTH = 16,          // Data width of input/output
+    parameter LAMBDA = 1,          // Modulo threshold λ
+	 parameter block_delay=2,
+	 parameter FRACTIONAL_BITS =12
+) (
+    input  logic                  clk,           // Clock signal
+    input  logic                  reset,         // Reset signal
+    input  logic                  valid_in,      // Valid input signal
+	 input	logic 						clk_en,
+    input  logic signed [WIDTH-1:0] diff_in,     // Higher-order difference Δ^N y[k]
+    output logic                  valid_out,     // Output valid signal
+    output logic signed [WIDTH-1:0] residual_out // Modulo residual Δ^N ε_y[k]
+);
+
+    // Internal signal for modulo operation
+    logic signed [WIDTH-1:0] modulo_result;
+	 logic [block_delay-1:0] valid_out_shift;
+//	 parameter logic[WIDTH-1:0] lambda_shifted, two_lambda_shifted;
+	 
+	 reg signed [WIDTH-1:0] residual_intermediate1,residual_intermediate2;
+
+	 parameter logic signed [WIDTH-1:0] lambda_shifted = LAMBDA <<< FRACTIONAL_BITS;
+//	 assign two_lambda_shifted= 1;
+	 parameter logic signed [WIDTH-1:0] two_lambda_shifted= (LAMBDA <<< FRACTIONAL_BITS)*2;
+    // Centered modulo operation
+    always_ff @(posedge clk or posedge reset) begin
+        if (reset) begin
+            modulo_result <= 0;
+            residual_out <= 0;
+            valid_out <= 0;
+				valid_out_shift=0;
+				
+        end 
+		  else begin
+				valid_out_shift[0] <= valid_in;
+            for (int i = 1; i <= block_delay; i++) begin
+                valid_out_shift[i] <= valid_out_shift[i-1];
+            end
+				if (clk_en) begin
+				
+				valid_out <= valid_out_shift[block_delay-1];
+		  
+//				if (valid_in) begin
+            // Centered modulo operation: 
+//				(a % b + b) % b
+//		(a % b + b) % b
+//				residual_out <= (diff_in + LAMBDA) % (2 * LAMBDA) - LAMBDA-diff_in;
+				
+			
+				if (valid_in) begin
+				
+				residual_intermediate1 <=(diff_in + lambda_shifted) % (two_lambda_shifted);
+
+				end
+				
+				if (valid_out_shift[0]) begin
+					residual_intermediate2 <= (residual_intermediate1+two_lambda_shifted)% (two_lambda_shifted);
+					
+				end
+				if (valid_out_shift[block_delay-1]) begin
+				
+				residual_out <= residual_intermediate2 - lambda_shifted-diff_in;
+				
+				end
+				//            if (diff_in >= LAMBDA) begin
+//                modulo_result <= diff_in - (2 * LAMBDA);
+//            end else if (diff_in < -LAMBDA) begin
+//                modulo_result <= diff_in + (2 * LAMBDA);
+//            end else begin
+//                modulo_result <= diff_in;  // No folding needed
+//            end
+				end
+            // Compute residual: residual_out = modulo_result - diff_in
+//            residual_out <= modulo_result ;
+
+            // Output valid signal
+//            valid_out <= 1;
+//        end else begin
+////            valid_out <= 0;
+//        end
+//				end
+		  end
+    end
+
+endmodule
