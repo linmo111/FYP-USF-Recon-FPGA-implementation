@@ -28,6 +28,19 @@ You should see the reconstructed waveform from the DAC output.
 6.You can change the model used by editing the code in the main loop.
 The top option is the C-reference model.
 
+# Content Guide
+
+## IP
+The IP folder contains all of the hardware blocks. The files that are not in the specific folders are for baseline&pipelined implementation. The higher orders folder contains the higher-order submodules. The ADC_LTC2308_FIFO folder contains ADC code. Any code that has tb means it is a testbench.
+## Software
+The software folder contains c code to run on Eclipse. The main file to recreate the streaming outcome will be in the streaming_reconstruct folder. The other folders are used for testing, check their comments for specific information.
+
+## Python_model
+
+The python simulation model is in this folder. Use reconv3.py and 2nd_order_simulation.py. Sin200B.txt is ideal data that works, real.txts are real data collected from the fpga, which does not work in the simulation.
+
+
+
 # Changing Parameters
 Parameters of the system can be changed in Platform Designer once you’ve added the IP to your system.
 
