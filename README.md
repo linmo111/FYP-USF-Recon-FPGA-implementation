@@ -4,13 +4,13 @@ This is my Final year project repository. On the implementation of Unlimited Sen
 
 1. Connect the hardware components as per the schematic in the figure. You will need:
 
-An Altera DE-10 Nano FPGA
-
-A Picoscope or waveform viewer
-
-A DAC
-
-A modulo ADC
+  An Altera DE-10 Nano FPGA
+  
+  A Picoscope or waveform viewer
+  
+  A DAC
+  
+  A modulo ADC
 
 2. Open Quartus and open the project. (Version 18.1 was used, but newer versions should work fine.)
 
@@ -25,7 +25,7 @@ Run the program. If no error messages appear, it should be running successfully.
 The default output without input should be a flat line at 2V.
 You should see the reconstructed waveform from the DAC output.
 
-6.You can change the model used by editing the code in the main loop.
+6. You can change the model used by editing the code in the main loop.
 The top option is the C-reference model.
 
 # Content Guide
