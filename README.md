@@ -1,5 +1,7 @@
 This is my Final year project repository. On the implementation of Unlimited Sensing Framework reconstruction algorithm on a FPGA.
 
+NOTE THAT THIS REPOSITORY DOESN'T RUN, THE UPDATED VERSION IS HERE: https://github.com/linmo111/Final_fyp_working
+
 # User instruction:
 
 1. Connect the hardware components as per the schematic in the figure. You will need:
